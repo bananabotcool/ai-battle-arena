@@ -20,7 +20,7 @@
 ### 🎭 Core Battle System
 - **God AI Narrator** - Dramatic battle commentary powered by OpenClaw/Chutes API
 - **6 Status Effects** - Burn, Freeze, Poison, Stun, Confusion, Bleed
-- **Critical Hit System** - 20% crit chance with screen shake & particle effects
+- **Critical Hit System** - Dynamic crit chance (5% base + LUCK-based) with screen shake & particle effects
 - **Special Moves** - Unique ultimates with 3-turn cooldowns
 - **Auto-Battle Mode** - AI vs AI spectator mode
 
@@ -153,24 +153,31 @@ The battle system uses a turn-based combat model:
 
 1. **Damage Calculation:**
    ```javascript
-   baseDamage = attacker.ATK
-   multiplier = random(0.8 - 1.2) or 2.0 (20% crit)
-   defenseReduction = defender.DEF * 0.2 (or 0.5 if defending)
-   finalDamage = max(5, baseDamage * multiplier - defense)
+   baseDamage = attacker.ATK - (defender.DEF * 0.3)
+   variance = random(0.85 - 1.15) // 85-115% variance
+   critChance = 5% + (LUCK / 100) // Typically 5.5% - 8.5%
+   critMultiplier = 2.0x (if crit)
+   finalDamage = max(5, baseDamage * variance * critMultiplier)
    ```
 
-2. **Special Attacks:**
-   - 2x damage multiplier
-   - 3-turn cooldown after use
-   - Dramatic screen effects
+2. **Critical Hits:**
+   - **Chance:** 5% base + (LUCK ÷ 100)% = 5.5% to 8.5% per fighter
+   - **Damage:** 2x damage multiplier
+   - **Effects:** Screen shake, particle burst, dramatic narration
 
-3. **Status Effects:**
-   - Burn: 5 damage/turn for 3 turns
-   - Freeze: Skip next turn
-   - Poison: 3 damage/turn for 5 turns
-   - Stun: Skip next turn + defense halved
-   - Confusion: 50% chance to hit self
-   - Bleed: 7 damage/turn for 2 turns
+3. **Special Attacks:**
+   - 3-turn cooldown after use
+   - Triggers special ability effects
+   - No inherent damage multiplier (same damage as normal attack)
+   - Dramatic screen effects & God AI narration
+
+4. **Status Effects:**
+   - **Burn:** 10% max HP per turn for 3 turns
+   - **Freeze:** Skip next turn, 50% DEF reduction
+   - **Poison:** 5% HP per turn per stack, stacks 3x, duration 3 turns
+   - **Stun:** Skip next turn
+   - **Confusion:** 50% chance to hit self for 2 turns
+   - **Bleed:** Progressive damage 5%, 10%, 15% over 3 turns
 
 ### Tournament System
 
