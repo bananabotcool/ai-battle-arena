@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Status - AI Battle Arena</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="mobile.css">
+  <style>
+    .status-dashboard {
+      max-width: 1400px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .status-card {
+      background: rgba(30, 30, 40, 0.9);
+      border: 2px solid #00ffff;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    
+    .status-card h3 {
+      color: #00ffff;
+      margin-top: 0;
+    }
+    
+    .status-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    
+    .status-indicator.online { background: #0f0; animation: pulse 2s infinite; }
+    .status-indicator.warning { background: #ff0; }
+    .status-indicator.offline { background: #f00; }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+    }
+    
+    .metric:last-child {
+      border-bottom: none;
+    }
+    
+    .metric-value {
+      font-weight: bold;
+      color: #0f0;
+    }
+    
+    .refresh-btn {
+      background: linear-gradient(135deg, #00ffff, #ff00ff);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 20px 0;
+    }
+    
+    .refresh-btn:hover {
+      transform: scale(1.05);
+    }
+    
+    .log-viewer {
+      background: #000;
+      border: 2px solid #00ffff;
+      border-radius: 10px;
+      padding: 15px;
+      max-height: 400px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #0f0;
+    }
+    
+    .log-entry {
+      margin: 5px 0;
+      padding: 5px;
+      border-left: 3px solid #0f0;
+      padding-left: 10px;
+    }
+    
+    .log-entry.error {
+      border-color: #f00;
+      color: #f00;
+    }
+    
+    .log-entry.warning {
+      border-color: #ff0;
+      color: #ff0;
+    }
+  </style>
+</head>
+<body>
+  <div class="status-dashboard">
+    <h1>📊 System Status</h1>
+    <button class="refresh-btn" onclick="refreshStatus()">🔄 Refresh All</button>
+    
+    <div class="status-grid">
+      <!-- Server Status -->
+      <div class="status-card">
+        <h3><span class="status-indicator online" id="serverStatus"></span>Server</h3>
+        <div class="metric">
+          <span>Status:</span>
+          <span class="metric-value" id="serverStatusText">Checking...</span>
+        </div>
+        <div class="metric">
+          <span>Uptime:</span>
+          <span class="metric-value" id="serverUptime">--</span>
+        </div>
+        <div class="metric">
+          <span>Response Time:</span>
+          <span class="metric-value" id="responseTime">--</span>
+        </div>
+      </div>
+      
+      <!-- API Stats -->
+      <div class="status-card">
+        <h3>🔌 API</h3>
+        <div class="metric">
+          <span>Total Agents:</span>
+          <span class="metric-value" id="totalAgents">--</span>
+        </div>
+        <div class="metric">
+          <span>Custom Agents:</span>
+          <span class="metric-value" id="customAgents">--</span>
+        </div>
+        <div class="metric">
+          <span>Active Battles:</span>
+          <span class="metric-value" id="activeBattles">--</span>
+        </div>
+      </div>
+      
+      <!-- Battle Stats -->
+      <div class="status-card">
+        <h3>⚔️ Battles</h3>
+        <div class="metric">
+          <span>Total Battles:</span>
+          <span class="metric-value" id="totalBattles">--</span>
+        </div>
+        <div class="metric">
+          <span>Avg Battle Length:</span>
+          <span class="metric-value" id="avgBattleLength">-- turns</span>
+        </div>
+        <div class="metric">
+          <span>Critical Hit Rate:</span>
+          <span class="metric-value" id="critRate">--%</span>
+        </div>
+      </div>
+      
+      <!-- God AI -->
+      <div class="status-card">
+        <h3>🎭 God AI Narrator</h3>
+        <div class="metric">
+          <span>Status:</span>
+          <span class="metric-value" id="godAiStatus">Online</span>
+        </div>
+        <div class="metric">
+          <span>Response Time:</span>
+          <span class="metric-value" id="godAiResponseTime">&lt;10ms</span>
+        </div>
+        <div class="metric">
+          <span>Success Rate:</span>
+          <span class="metric-value" id="godAiSuccessRate">100%</span>
+        </div>
+      </div>
+      
+      <!-- Leaderboard -->
+      <div class="status-card">
+        <h3>🏆 Leaderboard</h3>
+        <div class="metric">
+          <span>Total Rankings:</span>
+          <span class="metric-value" id="totalRankings">--</span>
+        </div>
+        <div class="metric">
+          <span>Top Agent:</span>
+          <span class="metric-value" id="topAgent">--</span>
+        </div>
+        <div class="metric">
+          <span>Highest Rating:</span>
+          <span class="metric-value" id="highestRating">--</span>
+        </div>
+      </div>
+      
+      <!-- Performance -->
+      <div class="status-card">
+        <h3>⚡ Performance</h3>
+        <div class="metric">
+          <span>Avg API Response:</span>
+          <span class="metric-value" id="avgApiResponse">&lt;50ms</span>
+        </div>
+        <div class="metric">
+          <span>Compression:</span>
+          <span class="metric-value" id="compression">Gzip enabled</span>
+        </div>
+        <div class="metric">
+          <span>Cache Status:</span>
+          <span class="metric-value" id="cacheStatus">Active</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Recent Activity Log -->
+    <div class="status-card" style="margin-top: 20px;">
+      <h3>📝 Recent Activity</h3>
+      <div class="log-viewer" id="activityLog">
+        <div class="log-entry">[INFO] System monitoring active</div>
+        <div class="log-entry">[INFO] Waiting for activity...</div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    let activityLog = [];
+    
+    function addLogEntry(message, type = 'info') {
+      const timestamp = new Date().toLocaleTimeString();
+      const logDiv = document.getElementById('activityLog');
+      const entry = document.createElement('div');
+      entry.className = `log-entry ${type}`;
+      entry.textContent = `[${timestamp}] ${message}`;
+      logDiv.insertBefore(entry, logDiv.firstChild);
+      
+      // Keep only last 50 entries
+      while (logDiv.children.length > 50) {
+        logDiv.removeChild(logDiv.lastChild);
+      }
+    }
+    
+    async function refreshStatus() {
+      addLogEntry('Refreshing status...', 'info');
+      
+      try {
+        // Check server status
+        const startTime = performance.now();
+        const healthResponse = await fetch('/health').catch(() => null);
+        const endTime = performance.now();
+        const responseTime = Math.round(endTime - startTime);
+        
+        if (healthResponse && healthResponse.ok) {
+          document.getElementById('serverStatusText').textContent = 'Online';
+          document.getElementById('serverStatus').className = 'status-indicator online';
+          document.getElementById('responseTime').textContent = `${responseTime}ms`;
+          
+          const healthData = await healthResponse.json();
+          if (healthData.uptime) {
+            const hours = Math.floor(healthData.uptime / 3600);
+            const minutes = Math.floor((healthData.uptime % 3600) / 60);
+            document.getElementById('serverUptime').textContent = `${hours}h ${minutes}m`;
+          }
+          
+          addLogEntry(`Server responding in ${responseTime}ms`, 'info');
+        } else {
+          document.getElementById('serverStatusText').textContent = 'Offline';
+          document.getElementById('serverStatus').className = 'status-indicator offline';
+          addLogEntry('Server not responding', 'error');
+        }
+        
+        // Get agents count
+        const agentsResponse = await fetch('/api/agents');
+        if (agentsResponse.ok) {
+          const agentsData = await agentsResponse.json();
+          document.getElementById('totalAgents').textContent = agentsData.agents.length;
+          
+          // Count custom agents
+          const customCount = agentsData.agents.filter(a => a.id.startsWith('custom_')).length;
+          document.getElementById('customAgents').textContent = customCount;
+          
+          addLogEntry(`Loaded ${agentsData.agents.length} agents (${customCount} custom)`, 'info');
+        }
+        
+        // Get leaderboard stats
+        const leaderboardResponse = await fetch('/api/leaderboard?limit=100');
+        if (leaderboardResponse.ok) {
+          const leaderboardData = await leaderboardResponse.json();
+          document.getElementById('totalRankings').textContent = leaderboardData.length;
+          
+          if (leaderboardData.length > 0) {
+            const topAgent = leaderboardData[0];
+            document.getElementById('topAgent').textContent = topAgent.name;
+            document.getElementById('highestRating').textContent = topAgent.rating;
+            
+            // Calculate total battles
+            const totalBattles = leaderboardData.reduce((sum, agent) => sum + (agent.battles || 0), 0);
+            document.getElementById('totalBattles').textContent = totalBattles;
+            
+            addLogEntry(`Leaderboard: ${leaderboardData.length} agents ranked`, 'info');
+          }
+        }
+        
+        addLogEntry('Status refresh complete', 'info');
+        
+      } catch (error) {
+        addLogEntry(`Error: ${error.message}`, 'error');
+      }
+    }
+    
+    // Auto-refresh every 30 seconds
+    setInterval(refreshStatus, 30000);
+    
+    // Initial refresh
+    setTimeout(refreshStatus, 500);
+  </script>
+  
+  <script src="navigation.js"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+[
+  {
+    "id": "berserker_ragnar",
+    "name": "Ragnar the Unstoppable",
+    "personality": "Berserker",
+    "stats": {
+      "hp": 120,
+      "maxHp": 120,
+      "atk": 30,
+      "def": 10,
+      "speed": 15,
+      "luck": 8,
+      "special": 20
+    },
+    "abilities": ["Fury Strike", "Bloodlust", "Rampage", "Special: Berserk Rage"],
+    "mood": "eager",
+    "specialMeter": 0,
+    "description": "A fierce warrior who knows only one strategy: ATTACK. Gets stronger as he gets angrier.",
+    "lore": "Ragnar lost everything in the Great War. Now he fights for the thrill, the blood, the roar of victory."
+  },
+  {
+    "id": "tank_ironwall",
+    "name": "Ironwall the Unyielding",
+    "personality": "Tank",
+    "stats": {
+      "hp": 150,
+      "maxHp": 150,
+      "atk": 20,
+      "def": 30,
+      "speed": 8,
+      "luck": 5,
+      "special": 15
+    },
+    "abilities": ["Shield Bash", "Counter", "Parry", "Special: Iron Fortress"],
+    "mood": "eager",
+    "specialMeter": 0,
+    "description": "An immovable object. Absorbs punishment and retaliates with crushing force.",
+    "lore": "Guardian of the Northern Gates. Has never retreated from battle. His shield bears a thousand scars."
+  },
+  {
+    "id": "trickster_loki",
+    "name": "Loki the Wildcard",
+    "personality": "Trickster",
+    "stats": {
+      "hp": 90,
+      "maxHp": 90,
+      "atk": 25,
+      "def": 15,
+      "speed": 25,
+      "luck": 35,
+      "special": 25
+    },
+    "abilities": ["Chaos Bolt", "Lucky Shot", "Dodge Roll", "Special: Wild Card"],
+    "mood": "eager",
+    "specialMeter": 0,
+    "description": "Unpredictable and chaotic. High luck means crits happen often. You never know what he'll do next.",
+    "lore": "A trickster god in mortal form. Fights for fun, not glory. Cheats when he can. Wins when he shouldn't."
+  },
+  {
+    "id": "strategist_athena",
+    "name": "Athena the Tactician",
+    "personality": "Strategist",
+    "stats": {
+      "hp": 100,
+      "maxHp": 100,
+      "atk": 28,
+      "def": 20,
+      "speed": 18,
+      "luck": 12,
+      "special": 30
+    },
+    "abilities": ["Calculated Strike", "Analyze", "Exploit Weakness", "Special: Master Plan"],
+    "mood": "eager",
+    "specialMeter": 0,
+    "description": "Every move calculated. Adapts to opponent's weaknesses. Rarely makes mistakes.",
+    "lore": "Former war general. Won 47 battles without losing a single soldier. Now fights to test her theories."
+  },
+  {
+    "id": "glasscannon_nova",
+    "name": "Nova the Annihilator",
+    "personality": "Glass Cannon",
+    "stats": {
+      "hp": 70,
+      "maxHp": 70,
+      "atk": 45,
+      "def": 5,
+      "speed": 22,
+      "luck": 15,
+      "special": 35
+    },
+    "abilities": ["Snipe", "Overload", "Quick Attack", "Special: One Shot"],
+    "mood": "eager",
+    "specialMeter": 0,
+    "description": "Hits like a meteor. Dies like glass. Win fast or don't win at all.",
+    "lore": "Channeler of raw cosmic energy. Can't control her power. Each attack risks burning her from the inside."
+  },
+  {
+    "id": "balanced_kai",
+    "name": "Kai the Balanced",
+    "personality": "Strategist",
+    "stats": {
+      "hp": 110,
+      "maxHp": 110,
+      "atk": 25,
+      "def": 20,
+      "speed": 20,
+      "luck": 18,
+      "special": 22
+    },
+    "abilities": ["Calculated Strike", "Shield Bash", "Quick Attack", "Special: Master Plan"],
+    "mood": "eager",
+    "specialMeter": 0,
+    "description": "Master of all, specialist in none. Adapts to any opponent with balanced stats.",
+    "lore": "Trained in every fighting style. Believes perfection comes from balance, not extremes."
+  },
+  {
+    "id": "speedster_zephyr",
+    "name": "Zephyr the Swift",
+    "personality": "Trickster",
+    "stats": {
+      "hp": 85,
+      "maxHp": 85,
+      "atk": 22,
+      "def": 12,
+      "speed": 35,
+      "luck": 25,
+      "special": 20
+    },
+    "abilities": ["Quick Attack", "Dodge Roll", "Lucky Shot", "Special: Wild Card"],
+    "mood": "eager",
+    "specialMeter": 0,
+    "description": "Can't catch what you can't see. Strikes before you blink. High speed ensures first strike.",
+    "lore": "Wind spirit bound to mortal form. Moves faster than thought. Dances through combat like it's a game."
+  },
+  {
+    "id": "juggernaut_titan",
+    "name": "Titan the Colossus",
+    "personality": "Tank",
+    "stats": {
+      "hp": 180,
+      "maxHp": 180,
+      "atk": 18,
+      "def": 35,
+      "speed": 5,
+      "luck": 3,
+      "special": 12
+    },
+    "abilities": ["Shield Bash", "Counter", "Parry", "Special: Iron Fortress"],
+    "mood": "eager",
+    "specialMeter": 0,
+    "description": "An absolute unit. Slow but unkillable. Outlasts everyone. Wins by attrition.",
+    "lore": "Ancient golem awakened by war. Made of living stone. Feels no pain. Stops for nothing."
+  }
+]

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Documentation - AI Battle Arena</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="mobile.css">
+  <style>
+    .api-doc {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    
+    .endpoint {
+      background: rgba(30, 30, 40, 0.9);
+      border: 2px solid #00ffff;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    
+    .method {
+      display: inline-block;
+      padding: 5px 15px;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    
+    .method.get { background: #4caf50; }
+    .method.post { background: #2196f3; }
+    .method.put { background: #ff9800; }
+    .method.delete { background: #f44336; }
+    
+    .code-block {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 5px;
+      padding: 15px;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+    
+    .code-block code {
+      color: #0f0;
+      font-family: 'Courier New', monospace;
+    }
+    
+    .param {
+      background: rgba(0, 255, 255, 0.1);
+      padding: 10px;
+      margin: 5px 0;
+      border-left: 3px solid #00ffff;
+    }
+    
+    .response {
+      background: rgba(0, 255, 0, 0.1);
+      padding: 10px;
+      margin: 10px 0;
+      border-left: 3px solid #0f0;
+    }
+  </style>
+</head>
+<body>
+  <div class="api-doc">
+    <h1>🔌 API Documentation</h1>
+    <p>Complete REST API reference for AI Battle Arena</p>
+    
+    <h2>Base URL</h2>
+    <div class="code-block">
+      <code>http://localhost:3001/api</code>
+    </div>
+    
+    <!-- Agents -->
+    <h2>Agents</h2>
+    
+    <div class="endpoint">
+      <h3><span class="method get">GET</span> /api/agents</h3>
+      <p>List all available agents (default + custom)</p>
+      
+      <h4>Response:</h4>
+      <div class="code-block"><code>{
+  "agents": [
+    {
+      "id": "bash-quickfingers",
+      "name": "Bash Quickfingers",
+      "personality": "Lightning-fast backend warrior",
+      "maxHp": 120,
+      "attack": 85,
+      "defense": 60,
+      "abilities": ["Rapid Deploy", "API Strike", "Database Slam"]
+    }
+  ]
+}</code></div>
+    </div>
+    
+    <!-- Battle Start -->
+    <h2>Battle System</h2>
+    
+    <div class="endpoint">
+      <h3><span class="method post">POST</span> /api/battle/start</h3>
+      <p>Start a new battle between two agents</p>
+      
+      <h4>Request Body:</h4>
+      <div class="code-block"><code>{
+  "agent1Id": "bash-quickfingers",
+  "agent2Id": "ceo"
+}</code></div>
+      
+      <h4>Response:</h4>
+      <div class="code-block"><code>{
+  "battleId": "battle-1234567890-abc123",
+  "battle": {
+    "agent1": { "hp": 120, "maxHp": 120, ... },
+    "agent2": { "hp": 150, "maxHp": 150, ... },
+    "turn": 1,
+    "status": "active"
+  },
+  "narration": "The arena erupts as Bash faces CEO..."
+}</code></div>
+    </div>
+    
+    <div class="endpoint">
+      <h3><span class="method post">POST</span> /api/battle/action</h3>
+      <p>Execute a battle turn</p>
+      
+      <h4>Request Body:</h4>
+      <div class="code-block"><code>{
+  "battleId": "battle-1234567890-abc123",
+  "abilityIndex": 0
+}</code></div>
+      
+      <div class="param">
+        <strong>abilityIndex:</strong> 0-2 for regular abilities, 2 for special ability
+      </div>
+      
+      <h4>Response:</h4>
+      <div class="code-block"><code>{
+  "battle": {
+    "agent1": { "hp": 120 },
+    "agent2": { "hp": 85 },
+    "turn": 2,
+    "status": "active"
+  },
+  "action": {
+    "attacker": "Bash Quickfingers",
+    "defender": "CEO",
+    "ability": "Rapid Deploy",
+    "damage": 65,
+    "actionType": "attack"
+  },
+  "narration": "Bash strikes with devastating force..."
+}</code></div>
+    </div>
+    
+    <!-- Leaderboard -->
+    <h2>Leaderboard</h2>
+    
+    <div class="endpoint">
+      <h3><span class="method get">GET</span> /api/leaderboard</h3>
+      <p>Get rankings</p>
+      
+      <h4>Query Parameters:</h4>
+      <div class="param">
+        <strong>sortBy:</strong> rating | winRate | wins | battles (default: rating)
+      </div>
+      <div class="param">
+        <strong>limit:</strong> number (default: 10)
+      </div>
+      
+      <h4>Example:</h4>
+      <div class="code-block"><code>GET /api/leaderboard?sortBy=rating&limit=20</code></div>
+      
+      <h4>Response:</h4>
+      <div class="code-block"><code>[
+  {
+    "id": "bash-quickfingers",
+    "name": "Bash Quickfingers",
+    "rating": 1523,
+    "wins": 45,
+    "losses": 12,
+    "battles": 57,
+    "winRate": 0.789,
+    "damageDealt": 12450,
+    "criticalHits": 23
+  }
+]</code></div>
+    </div>
+    
+    <div class="endpoint">
+      <h3><span class="method get">GET</span> /api/leaderboard/:agentId</h3>
+      <p>Get specific agent stats</p>
+      
+      <h4>Example:</h4>
+      <div class="code-block"><code>GET /api/leaderboard/bash-quickfingers</code></div>
+    </div>
+    
+    <div class="endpoint">
+      <h3><span class="method post">POST</span> /api/leaderboard/record</h3>
+      <p>Record battle result (updates ELO ratings)</p>
+      
+      <h4>Request Body:</h4>
+      <div class="code-block"><code>{
+  "agent1": { "id": "bash", "name": "Bash" },
+  "agent2": { "id": "ceo", "name": "CEO" },
+  "winnerId": "bash",
+  "stats": {
+    "damageDealt": { "bash": 250, "ceo": 180 },
+    "criticalHits": { "bash": 3, "ceo": 1 }
+  }
+}</code></div>
+    </div>
+    
+    <!-- Custom Agents -->
+    <h2>Custom Agents</h2>
+    
+    <div class="endpoint">
+      <h3><span class="method post">POST</span> /api/custom-agents</h3>
+      <p>Create a custom fighter</p>
+      
+      <h4>Request Body:</h4>
+      <div class="code-block"><code>{
+  "name": "Shadow Warrior",
+  "personality": "Trickster",
+  "stats": {
+    "hp": 100,
+    "maxHp": 100,
+    "atk": 50,
+    "def": 30,
+    "speed": 20,
+    "luck": 15,
+    "special": 10
+  },
+  "abilities": ["Quick Attack", "Shield Bash", "Dodge Roll", "Special: Berserk Rage"]
+}</code></div>
+    </div>
+    
+    <div class="endpoint">
+      <h3><span class="method get">GET</span> /api/custom-agents</h3>
+      <p>List all custom fighters</p>
+    </div>
+    
+    <!-- Health Check -->
+    <h2>Monitoring</h2>
+    
+    <div class="endpoint">
+      <h3><span class="method get">GET</span> /health</h3>
+      <p>Server health check</p>
+      
+      <h4>Response:</h4>
+      <div class="code-block"><code>{
+  "status": "ok",
+  "uptime": 12345,
+  "timestamp": 1708273200000
+}</code></div>
+    </div>
+    
+    <!-- Error Codes -->
+    <h2>Error Codes</h2>
+    
+    <div class="response">
+      <strong>200 OK:</strong> Request successful
+    </div>
+    <div class="response">
+      <strong>201 Created:</strong> Resource created successfully
+    </div>
+    <div class="response">
+      <strong>400 Bad Request:</strong> Invalid request body/parameters
+    </div>
+    <div class="response">
+      <strong>404 Not Found:</strong> Battle or agent not found
+    </div>
+    <div class="response">
+      <strong>500 Server Error:</strong> Internal server error
+    </div>
+    
+    <!-- Rate Limits -->
+    <h2>Rate Limits</h2>
+    <p>Currently no rate limits enforced. Recommended: 100 requests/minute per IP.</p>
+    
+    <!-- Examples -->
+    <h2>Quick Examples</h2>
+    
+    <h3>JavaScript/Fetch</h3>
+    <div class="code-block"><code>// Start battle
+const response = await fetch('http://localhost:3001/api/battle/start', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    agent1Id: 'bash-quickfingers',
+    agent2Id: 'ceo'
+  })
+});
+const data = await response.json();
+console.log(data.narration);</code></div>
+    
+    <h3>cURL</h3>
+    <div class="code-block"><code># List agents
+curl http://localhost:3001/api/agents
+
+# Start battle
+curl -X POST http://localhost:3001/api/battle/start \
+  -H "Content-Type: application/json" \
+  -d '{"agent1Id":"bash-quickfingers","agent2Id":"ceo"}'
+  
+# Execute turn
+curl -X POST http://localhost:3001/api/battle/action \
+  -H "Content-Type: application/json" \
+  -d '{"battleId":"battle-123","abilityIndex":0}'</code></div>
+    
+    <h3>Python</h3>
+    <div class="code-block"><code>import requests
+
+# Start battle
+response = requests.post('http://localhost:3001/api/battle/start', json={
+    'agent1Id': 'bash-quickfingers',
+    'agent2Id': 'ceo'
+})
+battle = response.json()
+print(battle['narration'])</code></div>
+    
+  </div>
+  
+  <script src="navigation.js"></script>
+</body>
+</html>

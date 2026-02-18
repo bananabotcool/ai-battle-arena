@@ -1,0 +1,44 @@
+{
+  "name": "ai-battle-arena",
+  "version": "2.0.0",
+  "description": "Epic AI agent battle arena with God AI narration",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js",
+    "test": "echo 'Tests coming soon' && exit 0",
+    "optimize": "./optimize.sh",
+    "deploy": "./quick-deploy.sh"
+  },
+  "keywords": [
+    "ai",
+    "battle",
+    "game",
+    "arena",
+    "turn-based",
+    "rpg",
+    "narration"
+  ],
+  "author": "BananaBot Studios",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bananabotcool/ai-battle-arena.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bananabotcool/ai-battle-arena/issues"
+  },
+  "homepage": "https://github.com/bananabotcool/ai-battle-arena#readme",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.7.0",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.0",
+    "express": "^4.21.0"
+  },
+  "devDependencies": {}
+}

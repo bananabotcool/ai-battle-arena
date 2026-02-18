@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI vs AI - Autonomous Battles</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .ai-vs-ai-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .control-panel {
+            background: rgba(20, 20, 30, 0.9);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .control-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .btn-ai {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, #00ff00, #00cc00);
+            color: #000;
+        }
+
+        .btn-start:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #00ff00;
+        }
+
+        .btn-stop {
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            color: #fff;
+        }
+
+        .btn-pause {
+            background: linear-gradient(135deg, #ffaa00, #ff8800);
+            color: #000;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .speed-control label {
+            color: #00ffff;
+            font-weight: bold;
+        }
+
+        .speed-slider {
+            width: 200px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(20, 20, 30, 0.9);
+            border: 2px solid #ff00ff;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .stat-card h3 {
+            color: #00ffff;
+            margin: 0 0 10px 0;
+            font-size: 14px;
+        }
+
+        .stat-value {
+            color: #fff;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .battle-queue {
+            background: rgba(20, 20, 30, 0.9);
+            border: 2px solid #ffaa00;
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .battle-queue h3 {
+            color: #ffaa00;
+            margin: 0 0 10px 0;
+        }
+
+        .queue-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            border-left: 3px solid #00ffff;
+        }
+
+        .queue-item.active {
+            border-left-color: #00ff00;
+            background: rgba(0, 255, 0, 0.1);
+        }
+
+        .queue-item.complete {
+            border-left-color: #888;
+            opacity: 0.6;
+        }
+
+        #battleDisplay {
+            background: rgba(20, 20, 30, 0.9);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 400px;
+        }
+
+        .winner-announcement {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,165,0,0.2));
+            border: 3px solid gold;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .winner-announcement h2 {
+            color: gold;
+            font-size: 48px;
+            text-shadow: 0 0 20px gold;
+            margin: 0;
+        }
+    </style>
+  <link rel="stylesheet" href="mobile.css">
+</head>
+<body>
+    <div class="ai-vs-ai-container">
+        <header class="arena-header">
+            <h1 class="title">
+                <span class="title-icon">🤖</span>
+                AI VS AI MODE
+                <span class="title-icon">🤖</span>
+            </h1>
+            <p style="text-align: center; color: #00ffff; margin-top: 10px;">
+                Watch autonomous agents battle endlessly!
+            </p>
+        </header>
+
+        <div class="control-panel">
+            <div class="control-row">
+                <button id="startAI" class="btn-ai btn-start">▶ Start Endless Battles</button>
+                <button id="pauseAI" class="btn-ai btn-pause" disabled>⏸ Pause</button>
+                <button id="stopAI" class="btn-ai btn-stop" disabled>⏹ Stop</button>
+                <a href="index.html" class="btn-ai" style="background: #555; color: #fff; text-decoration: none;">← Back</a>
+            </div>
+
+            <div class="control-row">
+                <div class="speed-control">
+                    <label for="speedSlider">Battle Speed:</label>
+                    <input type="range" id="speedSlider" class="speed-slider" min="1" max="10" value="3">
+                    <span id="speedDisplay" style="color: #fff; font-weight: bold;">3x</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>📊 Total Battles</h3>
+                <div class="stat-value" id="totalBattles">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>⏱️ Average Duration</h3>
+                <div class="stat-value" id="avgDuration">--</div>
+            </div>
+            <div class="stat-card">
+                <h3>🏆 Longest Streak</h3>
+                <div class="stat-value" id="longestStreak">--</div>
+            </div>
+            <div class="stat-card">
+                <h3>💥 Most Damage</h3>
+                <div class="stat-value" id="mostDamage">0</div>
+            </div>
+        </div>
+
+        <div id="battleDisplay"></div>
+
+        <div class="battle-queue" style="margin-top: 20px;">
+            <h3>🎯 Battle Queue</h3>
+            <div id="queueList"></div>
+        </div>
+    </div>
+
+    <script src="agents.js"></script>
+    <script src="ai-vs-ai.js"></script>
+<script src="navigation.js"></script>
+</body>
+</html>

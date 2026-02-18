@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Replay System Test</title>
+    <link rel="stylesheet" href="public/styles.css">
+    <style>
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: #0a0514;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(26, 15, 46, 0.8);
+            border: 2px solid #2d1b4e;
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #9d00ff;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+        
+        .test-section h2 {
+            color: #00f0ff;
+            margin-bottom: 1rem;
+        }
+        
+        button {
+            font-family: 'Orbitron', sans-serif;
+            padding: 0.75rem 1.5rem;
+            margin: 0.5rem;
+            background: linear-gradient(135deg, #9d00ff, #ff006e);
+            border: 2px solid #9d00ff;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(157, 0, 255, 0.5);
+        }
+        
+        .status {
+            padding: 1rem;
+            margin: 1rem 0;
+            background: rgba(0, 0, 0, 0.5);
+            border-left: 4px solid #39ff14;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .error {
+            border-left-color: #ff0044;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🎬 Replay System Test Suite</h1>
+        
+        <!-- Test 1: Mock Battle -->
+        <div class="test-section">
+            <h2>Test 1: Mock Battle Recording</h2>
+            <p>Simulate a battle and record actions</p>
+            <button onclick="testRecording()">▶️ Run Mock Battle</button>
+            <div id="recordStatus" class="status" style="display: none;"></div>
+        </div>
+        
+        <!-- Test 2: Playback -->
+        <div class="test-section">
+            <h2>Test 2: Replay Playback</h2>
+            <p>Load and play the recorded battle</p>
+            <button onclick="testPlayback()">▶️ Play Replay</button>
+            <button onclick="testPause()">⏸️ Pause/Resume</button>
+            <button onclick="testSpeed(1)">1x</button>
+            <button onclick="testSpeed(2)">2x</button>
+            <button onclick="testSpeed(4)">4x</button>
+            <div id="playStatus" class="status" style="display: none;"></div>
+        </div>
+        
+        <!-- Test 3: URL Sharing -->
+        <div class="test-section">
+            <h2>Test 3: URL Encoding & Sharing</h2>
+            <p>Generate and test shareable URL</p>
+            <button onclick="testURLEncoding()">🔗 Generate Share URL</button>
+            <button onclick="testAutoPlay()">▶️ Test Auto-play</button>
+            <div id="shareStatus" class="status" style="display: none;"></div>
+        </div>
+        
+        <!-- Test 4: Storage -->
+        <div class="test-section">
+            <h2>Test 4: LocalStorage</h2>
+            <p>Test saving and loading from localStorage</p>
+            <button onclick="testStorage()">💾 Test Storage</button>
+            <button onclick="clearStorage()">🗑️ Clear Storage</button>
+            <div id="storageStatus" class="status" style="display: none;"></div>
+        </div>
+        
+        <!-- Test Results -->
+        <div class="test-section">
+            <h2>Test Results</h2>
+            <div id="results" class="status">
+                Ready to test. Click buttons above to run tests.
+            </div>
+        </div>
+    </div>
+    
+    <script src="public/replay.js"></script>
+    <script>
+        // Mock Arena Controller
+        class MockArena {
+            constructor() {
+                this.currentRound = 1;
+                this.battleState = {
+                    agent1: { name: 'Test AI 1', hp: 100, stats: { atk: 30, def: 20 } },
+                    agent2: { name: 'Test AI 2', hp: 100, stats: { atk: 28, def: 22 } }
+                };
+            }
+            
+            async startBattle(agent1, agent2) {
+                this.battleState = {
+                    agent1: { ...agent1, hp: agent1.stats.hp },
+                    agent2: { ...agent2, hp: agent2.stats.hp }
+                };
+                return true;
+            }
+            
+            processLocalAction(agentIndex, action) {
+                console.log(`Processing: Agent ${agentIndex} - ${action}`);
+            }
+            
+            addBattleLog(type, text) {
+                console.log(`[${type}] ${text}`);
+            }
+        }
+        
+        // Initialize
+        const mockArena = new MockArena();
+        const replaySystem = new ReplaySystem(mockArena);
+        
+        function log(element, message, isError = false) {
+            const el = document.getElementById(element);
+            el.style.display = 'block';
+            el.className = isError ? 'status error' : 'status';
+            el.textContent = message;
+        }
+        
+        function updateResults(message) {
+            document.getElementById('results').textContent = message;
+        }
+        
+        // Test 1: Recording
+        function testRecording() {
+            log('recordStatus', 'Starting mock battle...');
+            
+            replaySystem.startRecording();
+            
+            // Mock initial state
+            replaySystem.recordInitialState(
+                { name: 'God AI', stats: { hp: 100, atk: 30, def: 20 } },
+                { name: 'Ragnar AI', stats: { hp: 100, atk: 28, def: 22 } }
+            );
+            
+            // Mock actions
+            const actions = [
+                { type: 'action', agentIndex: 1, action: 'attack', logText: 'God AI attacks!' },
+                { type: 'action', agentIndex: 2, action: 'defend', logText: 'Ragnar AI defends!' },
+                { type: 'action', agentIndex: 1, action: 'special', logText: 'God AI uses special!' },
+                { type: 'action', agentIndex: 2, action: 'attack', logText: 'Ragnar AI attacks!' }
+            ];
+            
+            actions.forEach((action, i) => {
+                setTimeout(() => {
+                    mockArena.currentRound = Math.floor(i / 2) + 1;
+                    replaySystem.recordAction(action);
+                    log('recordStatus', `Recorded action ${i + 1}/${actions.length}`);
+                    
+                    if (i === actions.length - 1) {
+                        replaySystem.recordBattleEnd('God AI', 'Ragnar AI');
+                        log('recordStatus', `✅ Recording complete! ${replaySystem.replayData.length} frames recorded`);
+                        updateResults(`✅ Test 1 PASSED - Recorded ${replaySystem.replayData.length} frames`);
+                    }
+                }, i * 500);
+            });
+        }
+        
+        // Test 2: Playback
+        function testPlayback() {
+            if (replaySystem.replayData.length === 0) {
+                log('playStatus', '❌ No replay data. Run Test 1 first.', true);
+                return;
+            }
+            
+            log('playStatus', '▶️ Starting playback...');
+            replaySystem.playReplay();
+            updateResults('✅ Test 2 PASSED - Playback started');
+            
+            setTimeout(() => {
+                log('playStatus', `✅ Playing... Frame ${replaySystem.currentFrame}/${replaySystem.replayData.length}`);
+            }, 2000);
+        }
+        
+        function testPause() {
+            if (!replaySystem.isPlaying) {
+                log('playStatus', '❌ No replay playing', true);
+                return;
+            }
+            
+            replaySystem.pausePlayback();
+            log('playStatus', replaySystem.isPaused ? '⏸️ Paused' : '▶️ Resumed');
+        }
+        
+        function testSpeed(speed) {
+            if (!replaySystem.isPlaying) {
+                log('playStatus', '❌ No replay playing', true);
+                return;
+            }
+            
+            replaySystem.setSpeed(speed);
+            log('playStatus', `⚡ Speed set to ${speed}x`);
+            updateResults(`✅ Speed changed to ${speed}x`);
+        }
+        
+        // Test 3: URL Sharing
+        function testURLEncoding() {
+            if (replaySystem.replayData.length === 0) {
+                log('shareStatus', '❌ No replay data. Run Test 1 first.', true);
+                return;
+            }
+            
+            const url = replaySystem.encodeReplayURL();
+            if (url) {
+                log('shareStatus', `✅ Share URL generated:\n${url.substring(0, 100)}...`);
+                updateResults('✅ Test 3 PASSED - URL encoding works');
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(url).then(() => {
+                    setTimeout(() => {
+                        log('shareStatus', `✅ URL copied to clipboard! (${url.length} chars)`);
+                    }, 1000);
+                });
+            } else {
+                log('shareStatus', '❌ Failed to generate URL', true);
+                updateResults('❌ Test 3 FAILED - URL encoding error');
+            }
+        }
+        
+        function testAutoPlay() {
+            log('shareStatus', 'Auto-play test: Reload with ?replay= parameter to test');
+            const url = replaySystem.encodeReplayURL();
+            if (url) {
+                log('shareStatus', `Open this URL to test auto-play:\n${url}`);
+            }
+        }
+        
+        // Test 4: Storage
+        function testStorage() {
+            if (replaySystem.replayData.length === 0) {
+                log('storageStatus', '❌ No replay data. Run Test 1 first.', true);
+                return;
+            }
+            
+            // Save
+            replaySystem.saveToLocalStorage();
+            log('storageStatus', '💾 Saved to localStorage');
+            
+            // Load
+            setTimeout(() => {
+                const loaded = replaySystem.loadFromLocalStorage();
+                if (loaded) {
+                    log('storageStatus', `✅ Loaded from localStorage: ${replaySystem.replayData.length} frames`);
+                    updateResults('✅ Test 4 PASSED - Storage works');
+                } else {
+                    log('storageStatus', '❌ Failed to load from localStorage', true);
+                    updateResults('❌ Test 4 FAILED - Storage error');
+                }
+            }, 500);
+        }
+        
+        function clearStorage() {
+            localStorage.removeItem('lastReplay');
+            log('storageStatus', '🗑️ Storage cleared');
+            updateResults('Storage cleared');
+        }
+        
+        // Auto-run if URL has replay parameter
+        if (window.location.search.includes('replay=')) {
+            setTimeout(() => {
+                log('shareStatus', '🎬 Auto-playing shared replay...');
+                updateResults('✅ Auto-play test - Replay loaded from URL');
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI BATTLE ARENA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations-polish.css">
+  <link rel="stylesheet" href="mobile.css">
+</head>
+<body>
+    <div class="arena-container">
+        <!-- Header -->
+        <header class="arena-header">
+            <div class="header-glow"></div>
+            <h1 class="title">
+                <span class="title-icon">⚔️</span>
+                AI BATTLE ARENA
+                <span class="title-icon">⚔️</span>
+            </h1>
+            <div class="round-counter">ROUND <span id="roundNumber">1</span></div>
+            <button class="tournament-mode-btn" onclick="window.location.href='tournament.html'" style="position: absolute; top: 20px; right: 20px; padding: 12px 24px; background: linear-gradient(135deg, var(--neon-yellow), var(--neon-pink)); color: black; border: none; border-radius: 8px; font-family: 'Orbitron', sans-serif; font-weight: 700; cursor: pointer; font-size: 1rem; box-shadow: 0 0 20px rgba(255, 234, 0, 0.5); transition: all 0.3s;">🏆 TOURNAMENT MODE</button>
+        </header>
+
+        <!-- Main Battle Area -->
+        <div class="battle-area">
+            <!-- Agent 1 (Left) -->
+            <div class="agent-panel agent-left">
+                <div class="agent-card" id="agent1Card">
+                    <div class="agent-header">
+                        <div class="agent-avatar" id="agent1Avatar">
+                            <div class="avatar-glow"></div>
+                            <div class="avatar-image">🤖</div>
+                        </div>
+                        <div class="agent-name-section">
+                            <h2 class="agent-name" id="agent1Name">God AI</h2>
+                            <div class="agent-title" id="agent1Title">The Omniscient</div>
+                        </div>
+                    </div>
+                    
+                    <div class="hp-section">
+                        <div class="hp-label">
+                            <span>HP</span>
+                            <span class="hp-value" id="agent1HP">100 / 100</span>
+                        </div>
+                        <div class="hp-bar-container">
+                            <div class="hp-bar" id="agent1HPBar" style="width: 100%"></div>
+                            <div class="hp-bar-shine"></div>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">ATK</div>
+                            <div class="stat-value" id="agent1ATK">30</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">DEF</div>
+                            <div class="stat-value" id="agent1DEF">20</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">SPD</div>
+                            <div class="stat-value" id="agent1SPD">25</div>
+                        </div>
+                    </div>
+
+                    <div class="mood-section">
+                        <div class="mood-label">Mood</div>
+                        <div class="mood-emoji" id="agent1Mood">😤</div>
+                    </div>
+
+                    <div class="status-effects" id="agent1Status"></div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn attack-btn" data-action="attack" data-agent="1">
+                        <span class="btn-icon">⚔️</span>
+                        <span class="btn-text">ATTACK</span>
+                    </button>
+                    <button class="action-btn defend-btn" data-action="defend" data-agent="1">
+                        <span class="btn-icon">🛡️</span>
+                        <span class="btn-text">DEFEND</span>
+                    </button>
+                    <button class="action-btn special-btn" data-action="special" data-agent="1">
+                        <span class="btn-icon">✨</span>
+                        <span class="btn-text">SPECIAL</span>
+                    </button>
+                    <button class="action-btn auto-btn" data-action="auto" data-agent="1">
+                        <span class="btn-icon">🎯</span>
+                        <span class="btn-text">AUTO</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Battle Log (Center) -->
+            <div class="battle-log-panel">
+                <div class="log-header">
+                    <div class="log-title">BATTLE LOG</div>
+                    <button class="clear-log-btn" id="clearLog">CLEAR</button>
+                </div>
+                <div class="battle-log" id="battleLog">
+                    <div class="log-entry system">
+                        <span class="log-icon">⚡</span>
+                        <span class="log-text">Battle initiated. May the best AI win!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent 2 (Right) -->
+            <div class="agent-panel agent-right">
+                <div class="agent-card" id="agent2Card">
+                    <div class="agent-header">
+                        <div class="agent-avatar" id="agent2Avatar">
+                            <div class="avatar-glow"></div>
+                            <div class="avatar-image">🦾</div>
+                        </div>
+                        <div class="agent-name-section">
+                            <h2 class="agent-name" id="agent2Name">Ragnar AI</h2>
+                            <div class="agent-title" id="agent2Title">The Destroyer</div>
+                        </div>
+                    </div>
+                    
+                    <div class="hp-section">
+                        <div class="hp-label">
+                            <span>HP</span>
+                            <span class="hp-value" id="agent2HP">100 / 100</span>
+                        </div>
+                        <div class="hp-bar-container">
+                            <div class="hp-bar" id="agent2HPBar" style="width: 100%"></div>
+                            <div class="hp-bar-shine"></div>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">ATK</div>
+                            <div class="stat-value" id="agent2ATK">28</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">DEF</div>
+                            <div class="stat-value" id="agent2DEF">22</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">SPD</div>
+                            <div class="stat-value" id="agent2SPD">27</div>
+                        </div>
+                    </div>
+
+                    <div class="mood-section">
+                        <div class="mood-label">Mood</div>
+                        <div class="mood-emoji" id="agent2Mood">😨</div>
+                    </div>
+
+                    <div class="status-effects" id="agent2Status"></div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn attack-btn" data-action="attack" data-agent="2">
+                        <span class="btn-icon">⚔️</span>
+                        <span class="btn-text">ATTACK</span>
+                    </button>
+                    <button class="action-btn defend-btn" data-action="defend" data-agent="2">
+                        <span class="btn-icon">🛡️</span>
+                        <span class="btn-text">DEFEND</span>
+                    </button>
+                    <button class="action-btn special-btn" data-action="special" data-agent="2">
+                        <span class="btn-icon">✨</span>
+                        <span class="btn-text">SPECIAL</span>
+                    </button>
+                    <button class="action-btn auto-btn" data-action="auto" data-agent="2">
+                        <span class="btn-icon">🎯</span>
+                        <span class="btn-text">AUTO</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Victory Modal -->
+        <div class="victory-modal" id="victoryModal">
+            <div class="victory-content">
+                <div class="victory-icon">👑</div>
+                <h2 class="victory-title" id="victoryTitle">VICTORY!</h2>
+                <p class="victory-text" id="victoryText"></p>
+                <button class="restart-btn" id="restartBtn">NEW BATTLE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Damage Numbers Container -->
+    <div id="damageContainer"></div>
+
+    <script src="animator.js"></script>
+    <script src="animations-enhanced.js"></script>
+    <script src="arena.js"></script>
+    <script src="replay.js"></script>
+    <script>
+        // Initialize replay system when arena is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof ArenaController !== 'undefined') {
+                // Wait for arena instance to be created
+                const checkArena = setInterval(() => {
+                    if (window.arena) {
+                        window.arena.replaySystem = new ReplaySystem(window.arena);
+                        console.log('✅ Replay system initialized');
+                        clearInterval(checkArena);
+                    }
+                }, 100);
+            }
+        });
+    </script>
+<script src="navigation.js"></script>
+</body>
+</html>

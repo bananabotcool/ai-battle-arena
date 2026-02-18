@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survival Mode - AI Battle Arena</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="survival.css">
+  <link rel="stylesheet" href="mobile.css">
+</head>
+<body class="survival-body">
+    <div class="survival-container">
+        <!-- Header -->
+        <header class="survival-header">
+            <h1 class="title">
+                <span class="title-icon">💀</span>
+                SURVIVAL MODE
+                <span class="title-icon">💀</span>
+            </h1>
+            <p class="subtitle">How long can you last?</p>
+            <div class="survival-controls">
+                <button id="startSurvival" class="btn-primary">Start Survival Run</button>
+                <button id="selectAgent" class="btn-secondary">Select Fighter</button>
+                <a href="index.html" class="btn-ghost">← Back to Arena</a>
+            </div>
+        </header>
+
+        <!-- Agent Selection -->
+        <section id="selectionPhase" class="selection-phase hidden">
+            <h2>Choose Your Fighter</h2>
+            <div id="fighterGrid" class="fighter-grid"></div>
+        </section>
+
+        <!-- Survival Arena -->
+        <section id="survivalPhase" class="survival-phase hidden">
+            <!-- Stats Display -->
+            <div class="survival-stats">
+                <div class="stat-card">
+                    <div class="stat-label">Wave</div>
+                    <div class="stat-value" id="currentWave">1</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Enemies Defeated</div>
+                    <div class="stat-value" id="enemiesDefeated">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Potions Used</div>
+                    <div class="stat-value" id="potionsUsed">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Time Survived</div>
+                    <div class="stat-value" id="timeSurvived">0:00</div>
+                </div>
+            </div>
+
+            <!-- Your Fighter -->
+            <div class="your-fighter">
+                <h3>Your Fighter</h3>
+                <div class="fighter-display" id="yourFighter"></div>
+                <button id="usePotion" class="btn-heal">
+                    🧪 Use Potion (+30% HP)
+                    <span class="potion-count" id="potionCount">(0 available)</span>
+                </button>
+            </div>
+
+            <!-- Enemy Display -->
+            <div class="enemy-display">
+                <h3>Wave <span id="waveNumber">1</span> Enemy</h3>
+                <div class="enemy-card" id="enemyCard"></div>
+            </div>
+
+            <!-- Battle Controls -->
+            <div class="battle-controls">
+                <button class="action-btn attack-btn" data-action="attack">
+                    ⚔️ ATTACK
+                </button>
+                <button class="action-btn defend-btn" data-action="defend">
+                    🛡️ DEFEND
+                </button>
+                <button class="action-btn special-btn" data-action="special">
+                    ⚡ SPECIAL
+                    <span class="cooldown-indicator hidden" id="specialCooldown">3</span>
+                </button>
+            </div>
+
+            <!-- Battle Log -->
+            <div class="battle-log">
+                <div class="log-header">
+                    <h4>Battle Log</h4>
+                    <button id="clearLog" class="btn-ghost-small">Clear</button>
+                </div>
+                <div id="logContainer" class="log-container"></div>
+            </div>
+        </section>
+
+        <!-- Game Over Screen -->
+        <div id="gameOverModal" class="modal hidden">
+            <div class="modal-content game-over-content">
+                <div class="game-over-icon">💀</div>
+                <h1 class="game-over-title">DEFEATED</h1>
+                <div class="final-stats" id="finalStats"></div>
+                <div class="leaderboard-section">
+                    <h3>Top Survivors</h3>
+                    <div id="leaderboard" class="leaderboard"></div>
+                </div>
+                <button id="tryAgain" class="btn-primary">Try Again</button>
+                <a href="index.html" class="btn-secondary">Back to Arena</a>
+            </div>
+        </div>
+
+        <!-- Wave Complete -->
+        <div id="waveCompleteModal" class="modal hidden">
+            <div class="modal-content wave-complete-content">
+                <div class="wave-complete-icon">🎉</div>
+                <h2 class="wave-complete-title">WAVE <span id="completedWave">1</span> COMPLETE!</h2>
+                <div class="wave-rewards">
+                    <div class="reward">
+                        <div class="reward-icon">🧪</div>
+                        <div class="reward-text">+1 Health Potion</div>
+                    </div>
+                </div>
+                <div class="next-wave-preview">
+                    <h3>Next Wave</h3>
+                    <div id="nextWaveInfo"></div>
+                </div>
+                <button id="continueWave" class="btn-primary">Continue to Wave <span id="nextWaveNum">2</span></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="survival.js"></script>
+</body>
+</html>

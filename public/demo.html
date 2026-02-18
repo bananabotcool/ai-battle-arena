@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Battle Arena - Full Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .demo-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .demo-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .demo-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            padding: 15px 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            color: white;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        }
+
+        .demo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+        }
+
+        #agentSelection, #battleArea, #creatorArea {
+            display: none;
+        }
+
+        .section-visible {
+            display: block !important;
+        }
+
+        .battle-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .action-button {
+            padding: 12px 24px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            border: 2px solid var(--neon-cyan);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--neon-cyan);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .action-button:hover {
+            background: var(--neon-cyan);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .action-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+    </style>
+  <link rel="stylesheet" href="mobile.css">
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>⚔️ AI BATTLE ARENA ⚔️</h1>
+            <p style="color: var(--text-secondary); font-size: 1.2rem;">Complete Demo: Create, Select, Battle!</p>
+        </div>
+
+        <div class="demo-actions">
+            <button class="demo-btn" onclick="showCreator()">✨ Create Custom Fighter</button>
+            <button class="demo-btn" onclick="showSelection()">👥 Select Fighter</button>
+            <button class="demo-btn" onclick="quickBattle()">⚡ Quick Random Battle</button>
+        </div>
+
+        <!-- Agent Selection Area -->
+        <div id="agentSelection"></div>
+
+        <!-- Battle Area -->
+        <div id="battleArea">
+            <div id="battleDisplay" style="text-align: center; padding: 40px;">
+                <h2 style="font-family: 'Orbitron', sans-serif; color: var(--neon-cyan); margin-bottom: 20px;">Battle In Progress</h2>
+                <div id="agent1Display" style="display: inline-block; margin: 20px; padding: 20px; background: var(--card-bg); border-radius: 10px; min-width: 200px;">
+                    <div style="font-size: 3rem;" id="agent1Emoji">🤖</div>
+                    <div style="font-family: 'Orbitron', sans-serif; font-size: 1.5rem; margin: 10px 0;" id="agent1DisplayName">Fighter 1</div>
+                    <div style="font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; color: var(--neon-green);" id="agent1DisplayHP">100 HP</div>
+                </div>
+                <div style="display: inline-block; font-size: 3rem; margin: 0 30px; color: var(--neon-pink);">VS</div>
+                <div id="agent2Display" style="display: inline-block; margin: 20px; padding: 20px; background: var(--card-bg); border-radius: 10px; min-width: 200px;">
+                    <div style="font-size: 3rem;" id="agent2Emoji">🤖</div>
+                    <div style="font-family: 'Orbitron', sans-serif; font-size: 1.5rem; margin: 10px 0;" id="agent2DisplayName">Fighter 2</div>
+                    <div style="font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; color: var(--neon-green);" id="agent2DisplayHP">100 HP</div>
+                </div>
+            </div>
+
+            <div class="battle-controls">
+                <button class="action-button" onclick="performAction(1, 'attack')">⚔️ Attack</button>
+                <button class="action-button" onclick="performAction(1, 'defend')">🛡️ Defend</button>
+                <button class="action-button" id="specialBtn" onclick="performAction(1, 'special')">✨ Special</button>
+                <button class="action-button" onclick="endBattle()">🚪 End Battle</button>
+            </div>
+
+            <div style="background: var(--card-bg); border: 2px solid var(--card-border); border-radius: 10px; padding: 20px; margin-top: 20px; max-height: 300px; overflow-y: auto;" id="battleLog"></div>
+        </div>
+
+        <!-- Creator Area -->
+        <div id="creatorArea"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="agents.js"></script>
+    <script src="arena.js"></script>
+    <script src="creator.js"></script>
+    <script src="animator.js"></script>
+
+    <script>
+        // Initialize systems
+        const agentSystem = new AgentSystem();
+        const arena = new ArenaController();
+        let currentAgent1 = null;
+        let currentAgent2 = null;
+
+        // Load agents on page load
+        agentSystem.loadAllAgents().then(() => {
+            console.log('Agents loaded:', agentSystem.allAgents.length);
+        });
+
+        // Show creator
+        function showCreator() {
+            const container = document.getElementById('creatorArea');
+            const creator = new AgentCreator(agentSystem);
+            creator.render(container);
+            
+            document.getElementById('agentSelection').classList.remove('section-visible');
+            document.getElementById('battleArea').classList.remove('section-visible');
+            document.getElementById('creatorArea').classList.add('section-visible');
+        }
+
+        // Show agent selection
+        function showSelection() {
+            const container = document.getElementById('agentSelection');
+            agentSystem.renderAgentSelection(container, selectAgent);
+            
+            document.getElementById('agentSelection').classList.add('section-visible');
+            document.getElementById('battleArea').classList.remove('section-visible');
+            document.getElementById('creatorArea').classList.remove('section-visible');
+        }
+
+        // Agent selected
+        function selectAgent(agent) {
+            if (!currentAgent1) {
+                currentAgent1 = agent;
+                alert(`${agent.name} selected! Now choose opponent or fight random.`);
+                return;
+            }
+
+            if (!currentAgent2) {
+                currentAgent2 = agent;
+                startBattle();
+            }
+        }
+
+        // Quick random battle
+        async function quickBattle() {
+            const match = agentSystem.createRandomMatch();
+            currentAgent1 = match.agent1;
+            currentAgent2 = match.agent2;
+            await startBattle();
+        }
+
+        // Start battle
+        async function startBattle() {
+            if (!currentAgent1 || !currentAgent2) return;
+
+            await arena.startBattle(currentAgent1, currentAgent2);
+            
+            // Update display
+            document.getElementById('agent1Emoji').textContent = agentSystem.getPersonalityEmoji(currentAgent1.personality);
+            document.getElementById('agent1DisplayName').textContent = currentAgent1.name;
+            document.getElementById('agent1DisplayHP').textContent = `${currentAgent1.stats.hp} HP`;
+            
+            document.getElementById('agent2Emoji').textContent = agentSystem.getPersonalityEmoji(currentAgent2.personality);
+            document.getElementById('agent2DisplayName').textContent = currentAgent2.name;
+            document.getElementById('agent2DisplayHP').textContent = `${currentAgent2.stats.hp} HP`;
+
+            document.getElementById('agentSelection').classList.remove('section-visible');
+            document.getElementById('battleArea').classList.add('section-visible');
+            document.getElementById('creatorArea').classList.remove('section-visible');
+        }
+
+        // Perform action
+        async function performAction(agentIndex, action) {
+            await arena.performAction(agentIndex, action);
+            
+            // Update HP display
+            if (arena.battleState) {
+                const a1 = arena.battleState.agent1;
+                const a2 = arena.battleState.agent2;
+                document.getElementById('agent1DisplayHP').textContent = `${a1.hp} HP`;
+                document.getElementById('agent2DisplayHP').textContent = `${a2.hp} HP`;
+
+                // Check victory
+                if (a1.hp <= 0 || a2.hp <= 0) {
+                    setTimeout(() => {
+                        const winner = a1.hp > 0 ? a1 : a2;
+                        alert(`🏆 ${winner.name} WINS! 🏆`);
+                        endBattle();
+                    }, 1000);
+                } else {
+                    // AI opponent turn
+                    setTimeout(() => aiTurn(), 800);
+                }
+            }
+        }
+
+        // AI turn
+        async function aiTurn() {
+            const actions = ['attack', 'defend'];
+            const action = actions[Math.floor(Math.random() * actions.length)];
+            await arena.performAction(2, action);
+
+            // Update HP display
+            if (arena.battleState) {
+                const a1 = arena.battleState.agent1;
+                const a2 = arena.battleState.agent2;
+                document.getElementById('agent1DisplayHP').textContent = `${a1.hp} HP`;
+                document.getElementById('agent2DisplayHP').textContent = `${a2.hp} HP`;
+
+                // Check victory
+                if (a1.hp <= 0 || a2.hp <= 0) {
+                    setTimeout(() => {
+                        const winner = a1.hp > 0 ? a1 : a2;
+                        alert(`🏆 ${winner.name} WINS! 🏆`);
+                        endBattle();
+                    }, 1000);
+                }
+            }
+        }
+
+        // End battle
+        function endBattle() {
+            arena.reset();
+            currentAgent1 = null;
+            currentAgent2 = null;
+            document.getElementById('battleArea').classList.remove('section-visible');
+        }
+
+        // Refresh agent list (called after creating custom agent)
+        window.refreshAgentList = function() {
+            agentSystem.loadAllAgents();
+        };
+    </script>
+<script src="navigation.js"></script>
+</body>
+</html>

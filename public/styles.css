@@ -1,0 +1,741 @@
+/**
+ * Status Effects Styles
+ * Visual styling for status icons and animations
+ */
+
+/* ────────────────────────────────────────────────────────────────── */
+/* STATUS ICONS CONTAINER */
+/* ────────────────────────────────────────────────────────────────── */
+
+.status-icons-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  min-height: 40px;
+  align-items: center;
+}
+
+/* ────────────────────────────────────────────────────────────────── */
+/* STATUS ICON BASE */
+/* ────────────────────────────────────────────────────────────────── */
+
+.status-icon {
+  position: relative;
+  font-size: 28px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: scale(0) rotate(0deg);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.status-icon.active {
+  opacity: 1;
+  transform: scale(1) rotate(360deg);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.status-icon.fade-out {
+  opacity: 0;
+  transform: scale(0) rotate(-360deg);
+}
+
+/* ────────────────────────────────────────────────────────────────── */
+/* EFFECT-SPECIFIC STYLING */
+/* ────────────────────────────────────────────────────────────────── */
+
+.status-burn {
+  background: radial-gradient(circle, rgba(255, 100, 0, 0.3), rgba(255, 0, 0, 0.2));
+  box-shadow: 0 0 15px rgba(255, 100, 0, 0.6);
+  animation: pulse 2s ease-in-out infinite, flicker 0.5s ease-in-out infinite;
+}
+
+.status-freeze {
+  background: radial-gradient(circle, rgba(0, 200, 255, 0.3), rgba(100, 200, 255, 0.2));
+  box-shadow: 0 0 15px rgba(0, 200, 255, 0.6);
+  animation: pulse 2s ease-in-out infinite, shimmer 1.5s ease-in-out infinite;
+}
+
+.status-poison {
+  background: radial-gradient(circle, rgba(150, 0, 255, 0.3), rgba(100, 0, 200, 0.2));
+  box-shadow: 0 0 15px rgba(150, 0, 255, 0.6);
+  animation: pulse 2s ease-in-out infinite, drip 1s ease-in-out infinite;
+}
+
+.status-stun {
+  background: radial-gradient(circle, rgba(255, 255, 0, 0.3), rgba(255, 200, 0, 0.2));
+  box-shadow: 0 0 15px rgba(255, 255, 0, 0.6);
+  animation: pulse 2s ease-in-out infinite, electric 0.3s ease-in-out infinite;
+}
+
+.status-confusion {
+  background: radial-gradient(circle, rgba(255, 0, 255, 0.3), rgba(200, 0, 200, 0.2));
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.6);
+  animation: pulse 2s ease-in-out infinite, wobble 0.5s ease-in-out infinite;
+}
+
+.status-bleed {
+  background: radial-gradient(circle, rgba(200, 0, 0, 0.3), rgba(150, 0, 0, 0.2));
+  box-shadow: 0 0 15px rgba(200, 0, 0, 0.6);
+  animation: pulse 2s ease-in-out infinite, drip 0.8s ease-in-out infinite;
+}
+
+/* ────────────────────────────────────────────────────────────────── */
+/* STACK BADGE */
+/* ────────────────────────────────────────────────────────────────── */
+
+.stack-badge {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  background: rgba(255, 215, 0, 0.9);
+  color: #1a1a2e;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 5px;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.stack-badge.pulse-once {
+  animation: badge-pulse 0.5s ease-out;
+}
+
+/* ────────────────────────────────────────────────────────────────── */
+/* DAMAGE NUMBERS */
+/* ────────────────────────────────────────────────────────────────── */
+
+.damage-number {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  z-index: 100;
+  animation: float-up 2s ease-out forwards;
+}
+
+.damage-normal {
+  color: #ff6b6b;
+}
+
+.damage-crit {
+  color: #ffd93d;
+  font-size: 40px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.damage-status {
+  color: #a0a0a0;
+  font-size: 24px;
+}
+
+.damage-heal {
+  color: #4ade80;
+}
+
+/* ────────────────────────────────────────────────────────────────── */
+/* ANIMATIONS */
+/* ────────────────────────────────────────────────────────────────── */
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.3);
+  }
+}
+
+@keyframes drip {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes electric {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.5);
+  }
+}
+
+@keyframes wobble {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes badge-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes float-up {
+  0% {
+    opacity: 1;
+    transform: translate(var(--offset-x, 0), 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--offset-x, 0), -100px);
+  }
+}
+
+/* ────────────────────────────────────────────────────────────────── */
+/* RESPONSIVE */
+/* ────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .status-icon {
+    font-size: 24px;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .damage-number {
+    font-size: 24px;
+  }
+  
+  .damage-crit {
+    font-size: 32px;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────────── */
+/* CRITICAL HIT EFFECTS                                                */
+/* ────────────────────────────────────────────────────────────────── */
+
+.critical-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 72px;
+  font-weight: 900;
+  color: #ff1744;
+  text-shadow: 
+    0 0 10px #ff1744,
+    0 0 20px #ff1744,
+    0 0 30px #ff1744,
+    2px 2px 4px rgba(0,0,0,0.8);
+  z-index: 1000;
+  pointer-events: none;
+  animation: critPulse 1s ease-out;
+}
+
+@keyframes critPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+.critical-text.fade-out {
+  animation: critFadeOut 0.5s ease-out forwards;
+}
+
+@keyframes critFadeOut {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -80%) scale(0.8);
+  }
+}
+
+/* Screen shake animation */
+.screen-shake {
+  animation: screenShake 0.3s ease-in-out;
+}
+
+@keyframes screenShake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+  20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
+/* Critical hit particles */
+.crit-particle {
+  position: absolute;
+  font-size: 24px;
+  pointer-events: none;
+  animation: critParticle 1s ease-out forwards;
+  z-index: 999;
+}
+
+@keyframes critParticle {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0);
+    opacity: 0;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────────── */
+/* SPECIAL COOLDOWNS                                                   */
+/* ────────────────────────────────────────────────────────────────── */
+
+.special-button {
+  position: relative;
+}
+
+.special-button.on-cooldown {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.7);
+  pointer-events: none;
+}
+
+.special-button.on-cooldown:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.special-button.ready {
+  animation: specialReady 2s ease-in-out infinite;
+  box-shadow: 0 0 15px rgba(0, 255, 100, 0.6);
+}
+
+@keyframes specialReady {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 255, 100, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 255, 100, 0.9);
+  }
+}
+
+.cooldown-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  font-weight: 900;
+  color: #ff5252;
+  text-shadow: 
+    0 0 5px rgba(0,0,0,0.8),
+    1px 1px 2px rgba(0,0,0,0.9);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ═════════════════════════════════════════════════════════════════════ */
+/* REPLAY SYSTEM STYLES */
+/* ═════════════════════════════════════════════════════════════════════ */
+
+/* Hidden utility */
+.hidden {
+  display: none !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* REPLAY CONTROLS PANEL */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.replay-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10, 5, 20, 0.95);
+  border: 2px solid #9d00ff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 0 40px rgba(157, 0, 255, 0.5);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  min-width: 600px;
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateX(-50%) translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* REPLAY MODE INDICATOR */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.replay-mode-indicator {
+  text-align: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: linear-gradient(90deg, transparent, rgba(157, 0, 255, 0.2), transparent);
+  border-radius: 8px;
+}
+
+.replay-icon {
+  font-size: 1.5rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.replay-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #9d00ff;
+  text-shadow: 0 0 10px #9d00ff;
+  letter-spacing: 3px;
+  margin-left: 0.5rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* PROGRESS BAR */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.replay-progress {
+  margin-bottom: 1rem;
+}
+
+.replay-progress span {
+  font-size: 0.9rem;
+  color: #b8b8d4;
+  font-weight: 600;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(45, 27, 78, 0.5);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0.5rem 0;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #9d00ff, #ff006e);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(157, 0, 255, 0.5);
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* CONTROL BUTTONS GRID */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.replay-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.replay-btn {
+  font-family: 'Orbitron', sans-serif;
+  padding: 0.75rem 1rem;
+  background: rgba(26, 15, 46, 0.8);
+  border: 2px solid #2d1b4e;
+  border-radius: 8px;
+  color: #b8b8d4;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.replay-btn:hover {
+  border-color: #9d00ff;
+  color: #9d00ff;
+  box-shadow: 0 0 15px rgba(157, 0, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.replay-btn:active {
+  transform: translateY(0);
+}
+
+.replay-btn-primary {
+  background: linear-gradient(135deg, #9d00ff, #ff006e);
+  border-color: #9d00ff;
+  color: white;
+  font-weight: 700;
+}
+
+.replay-btn-primary:hover {
+  box-shadow: 0 0 20px rgba(157, 0, 255, 0.6);
+}
+
+.replay-btn-share {
+  grid-column: span 2;
+  background: rgba(0, 240, 255, 0.1);
+  border-color: #00f0ff;
+  color: #00f0ff;
+}
+
+.replay-btn-share:hover {
+  background: rgba(0, 240, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+}
+
+.replay-btn-close {
+  grid-column: span 2;
+  background: rgba(255, 0, 110, 0.1);
+  border-color: #ff006e;
+  color: #ff006e;
+}
+
+.replay-btn-close:hover {
+  background: rgba(255, 0, 110, 0.2);
+  box-shadow: 0 0 20px rgba(255, 0, 110, 0.4);
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* SPEED CONTROLS */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.replay-speed-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.speed-label {
+  font-size: 0.9rem;
+  color: #6d6d8e;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.speed-btn {
+  font-family: 'Orbitron', sans-serif;
+  padding: 0.5rem 1rem;
+  background: rgba(26, 15, 46, 0.6);
+  border: 2px solid #2d1b4e;
+  border-radius: 6px;
+  color: #b8b8d4;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 50px;
+}
+
+.speed-btn:hover {
+  border-color: #ffea00;
+  color: #ffea00;
+  box-shadow: 0 0 10px rgba(255, 234, 0, 0.3);
+}
+
+.speed-btn.active {
+  background: linear-gradient(135deg, #ffea00, #ff8800);
+  border-color: #ffea00;
+  color: #0a0514;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(255, 234, 0, 0.5);
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* WATCH REPLAY BUTTON (appears after battle ends) */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.watch-replay-btn {
+  position: fixed;
+  top: 100px;
+  right: 30px;
+  font-family: 'Orbitron', sans-serif;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #9d00ff, #ff006e);
+  border: 2px solid #9d00ff;
+  border-radius: 12px;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 30px rgba(157, 0, 255, 0.4);
+  animation: pulseGlow 2s ease-in-out infinite;
+  z-index: 9998;
+}
+
+.watch-replay-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(157, 0, 255, 0.6);
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(157, 0, 255, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 50px rgba(157, 0, 255, 0.7);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* TOAST NOTIFICATIONS */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.toast {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  padding: 1rem 2rem;
+  background: rgba(10, 5, 20, 0.95);
+  border: 2px solid;
+  border-radius: 12px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  z-index: 10000;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  transition: transform 0.4s ease-out;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast-success {
+  border-color: #39ff14;
+  color: #39ff14;
+  box-shadow: 0 0 30px rgba(57, 255, 20, 0.4);
+}
+
+.toast-error {
+  border-color: #ff0044;
+  color: #ff0044;
+  box-shadow: 0 0 30px rgba(255, 0, 68, 0.4);
+}
+
+.toast-info {
+  border-color: #00f0ff;
+  color: #00f0ff;
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* RESPONSIVE ADJUSTMENTS */
+/* ─────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .replay-controls {
+    min-width: 90%;
+    padding: 1rem;
+  }
+  
+  .replay-controls-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .replay-btn-share,
+  .replay-btn-close {
+    grid-column: span 1;
+  }
+  
+  .watch-replay-btn {
+    right: 20px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════════════ */
+/* BATTLE LOG STATUS EFFECT STYLING */
+/* ═════════════════════════════════════════════════════════════════════ */
+
+.log-entry.log-status {
+  color: #b19cd9;
+  background: rgba(157, 0, 255, 0.1);
+  border-left: 3px solid #9d00ff;
+  padding-left: 12px;
+  font-style: italic;
+}
+
+.log-entry.log-attack {
+  color: #ff6b6b;
+}
+
+.log-entry.log-defend {
+  color: #00d4ff;
+}
+
+.log-entry.log-special {
+  color: #ffd93d;
+  font-weight: 700;
+}
+
+.log-entry.log-system {
+  color: #b8b8d4;
+}
+

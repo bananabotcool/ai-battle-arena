@@ -1,0 +1,782 @@
+/**
+ * ═══════════════════════════════════════════════════════════════════
+ * ANIMATION POLISH - Professional Visual Effects
+ * ═══════════════════════════════════════════════════════════════════
+ * Phase 1: Polish all animations for smooth, professional feel
+ * Standard timing: 300ms (unless noted otherwise)
+ */
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* 1. HP BAR ANIMATIONS */
+/* ═════════════════════════════════════════════════════════════════ */
+
+.hp-bar {
+  /* Smooth width transitions - not instant jumps */
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.4s ease,
+              box-shadow 0.4s ease,
+              filter 0.3s ease;
+  will-change: width;
+}
+
+/* HP Bar shake effect when hit */
+@keyframes hpBarShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-2px); }
+}
+
+.hp-bar.hit {
+  animation: hpBarShake 0.3s ease-out;
+}
+
+/* Color transitions based on HP percentage */
+.hp-bar.critical {
+  background: linear-gradient(90deg, #ff0044, #ff4466) !important;
+  box-shadow: 0 0 20px rgba(255, 0, 68, 0.8) !important;
+  animation: hpPulse 1s ease-in-out infinite;
+}
+
+.hp-bar.warning {
+  background: linear-gradient(90deg, #ff8800, #ffaa00) !important;
+  box-shadow: 0 0 20px rgba(255, 136, 0, 0.6) !important;
+}
+
+.hp-bar.caution {
+  background: linear-gradient(90deg, #ffdd00, #ffee00) !important;
+  box-shadow: 0 0 20px rgba(255, 221, 0, 0.6) !important;
+}
+
+.hp-bar.healthy {
+  background: linear-gradient(90deg, #00ff88, #00dd66) !important;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.6) !important;
+}
+
+/* HP pulse animation for critical health */
+@keyframes hpPulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(255, 0, 68, 0.8);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 30px rgba(255, 0, 68, 1);
+  }
+}
+
+/* Glow effect on heal */
+@keyframes healGlow {
+  0% {
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 255, 136, 1);
+    filter: brightness(1.5);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+    filter: brightness(1);
+  }
+}
+
+.hp-bar.healing {
+  animation: healGlow 0.8s ease-out;
+}
+
+/* HP value number transitions */
+.hp-value {
+  transition: color 0.3s ease;
+}
+
+/* HP Bar Container shake on damage */
+.hp-bar-container.damaged {
+  animation: containerShake 0.4s ease-out;
+}
+
+@keyframes containerShake {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-3px); }
+  50% { transform: translateY(2px); }
+  75% { transform: translateY(-1px); }
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* 2. STATUS EFFECT ICONS */
+/* ═════════════════════════════════════════════════════════════════ */
+
+/* Smooth fade in with bounce */
+.status-icon {
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  will-change: transform, opacity;
+}
+
+.status-icon.active {
+  animation: statusBounceIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+             statusPulse 2.5s ease-in-out infinite 0.5s;
+}
+
+@keyframes statusBounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.2) rotate(360deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+/* Subtle pulse while active */
+@keyframes statusPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Smooth fade out with shrink */
+.status-icon.fade-out {
+  animation: statusFadeOut 0.4s cubic-bezier(0.6, 0, 0.4, 1) forwards;
+}
+
+@keyframes statusFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(-180deg);
+  }
+}
+
+/* Stack badge pulse on update */
+.stack-badge.pulse-once {
+  animation: stackPulse 0.4s ease-out;
+}
+
+@keyframes stackPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+    background: rgba(255, 255, 0, 1);
+  }
+}
+
+/* Horizontal stacking with gap */
+.status-icons-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  transition: all 0.3s ease;
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* 3. CRITICAL HIT EFFECTS */
+/* ═════════════════════════════════════════════════════════════════ */
+
+/* Enhanced screen shake with intensity */
+@keyframes criticalScreenShake {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-8px, 6px); }
+  20% { transform: translate(7px, -5px); }
+  30% { transform: translate(-6px, 8px); }
+  40% { transform: translate(9px, -7px); }
+  50% { transform: translate(-7px, 6px); }
+  60% { transform: translate(6px, -8px); }
+  70% { transform: translate(-5px, 7px); }
+  80% { transform: translate(4px, -6px); }
+  90% { transform: translate(-3px, 5px); }
+}
+
+body.critical-shake {
+  animation: criticalScreenShake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+/* Dramatic "CRITICAL!" text */
+.critical-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 4rem;
+  font-weight: 900;
+  color: #ff006e;
+  text-shadow: 
+    0 0 10px #ff006e,
+    0 0 20px #ff006e,
+    0 0 30px #ff006e,
+    0 0 40px #ff006e;
+  z-index: 9999;
+  animation: critTextExpand 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes critTextExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(-15deg);
+    opacity: 0;
+  }
+  15% {
+    transform: translate(-50%, -50%) scale(1.3) rotate(5deg);
+    opacity: 1;
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.8) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+/* Slow-mo effect timing */
+body.slow-mo {
+  animation: slowMoEffect 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slowMoEffect {
+  0% {
+    filter: contrast(1) brightness(1) saturate(1);
+  }
+  20% {
+    filter: contrast(1.4) brightness(1.3) saturate(1.5);
+  }
+  80% {
+    filter: contrast(1.4) brightness(1.3) saturate(1.5);
+  }
+  100% {
+    filter: contrast(1) brightness(1) saturate(1);
+  }
+}
+
+/* Enhanced crit particles */
+.crit-particle {
+  position: absolute;
+  font-size: 2rem;
+  animation: critParticleBurst 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+@keyframes critParticleBurst {
+  0% {
+    transform: translate(0, 0) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  30% {
+    transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(360deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(var(--tx) * 1.5), calc(var(--ty) * 1.5)) scale(0.5) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* 4. BATTLE LOG */
+/* ═════════════════════════════════════════════════════════════════ */
+
+/* Smooth scroll behavior */
+.battle-log {
+  scroll-behavior: smooth;
+  transition: all 0.3s ease;
+}
+
+/* Log entry slide-in animation */
+.log-entry {
+  animation: logSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+@keyframes logSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Color coding for different log types */
+.log-entry.damage {
+  border-left-color: #ff0044;
+  background: linear-gradient(90deg, rgba(255, 0, 68, 0.12) 0%, transparent 100%);
+}
+
+.log-entry.damage:hover {
+  background: linear-gradient(90deg, rgba(255, 0, 68, 0.18) 0%, transparent 100%);
+}
+
+.log-entry.heal {
+  border-left-color: #00ff88;
+  background: linear-gradient(90deg, rgba(0, 255, 136, 0.12) 0%, transparent 100%);
+}
+
+.log-entry.heal:hover {
+  background: linear-gradient(90deg, rgba(0, 255, 136, 0.18) 0%, transparent 100%);
+}
+
+.log-entry.status {
+  border-left-color: #9d00ff;
+  background: linear-gradient(90deg, rgba(157, 0, 255, 0.12) 0%, transparent 100%);
+}
+
+.log-entry.status:hover {
+  background: linear-gradient(90deg, rgba(157, 0, 255, 0.18) 0%, transparent 100%);
+}
+
+.log-entry.special {
+  border-left-color: #ff006e;
+  background: linear-gradient(90deg, rgba(255, 0, 110, 0.12) 0%, transparent 100%);
+  animation: logSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+             specialHighlight 1.5s ease-out;
+}
+
+@keyframes specialHighlight {
+  0%, 100% {
+    border-left-width: 3px;
+    box-shadow: none;
+  }
+  50% {
+    border-left-width: 6px;
+    box-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
+  }
+}
+
+.log-entry.critical {
+  border-left-color: #ffea00;
+  background: linear-gradient(90deg, rgba(255, 234, 0, 0.15) 0%, transparent 100%);
+  animation: logSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+             criticalPulse 1s ease-out;
+}
+
+@keyframes criticalPulse {
+  0%, 100% {
+    box-shadow: none;
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255, 234, 0, 0.6);
+  }
+}
+
+/* Log icon pulse for important events */
+.log-icon {
+  transition: transform 0.3s ease;
+}
+
+.log-entry.special .log-icon,
+.log-entry.critical .log-icon {
+  animation: iconPulse 1s ease-out;
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.4);
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* 5. SPECIAL BUTTON COOLDOWN */
+/* ═════════════════════════════════════════════════════════════════ */
+
+.special-btn,
+.action-btn.special-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Smooth transition to grayed-out state */
+.special-btn.on-cooldown {
+  filter: grayscale(0.8) brightness(0.6);
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  transition: all 0.4s ease;
+}
+
+/* Cooldown number visibility and clarity */
+.cooldown-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  font-size: 3rem;
+  font-weight: 900;
+  color: #ff5252;
+  text-shadow: 
+    0 0 10px rgba(0, 0, 0, 0.9),
+    0 0 20px #ff5252,
+    2px 2px 4px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  z-index: 10;
+  animation: cooldownAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes cooldownAppear {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(1.2) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Pulsing "ready" effect */
+.special-btn.ready {
+  animation: specialReady 2s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(157, 0, 255, 0.6);
+  filter: brightness(1.2);
+}
+
+@keyframes specialReady {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(157, 0, 255, 0.6);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(157, 0, 255, 1),
+                0 0 50px rgba(157, 0, 255, 0.5);
+    transform: scale(1.03);
+  }
+}
+
+/* Ready pulse glow wave */
+.special-btn.ready::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, transparent, rgba(157, 0, 255, 0.6), transparent);
+  border-radius: inherit;
+  animation: readyWave 2s linear infinite;
+  opacity: 0.7;
+  z-index: -1;
+}
+
+@keyframes readyWave {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Hover state enhancement */
+.special-btn:not(.on-cooldown):hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 25px rgba(157, 0, 255, 0.5);
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* 6. TOURNAMENT BRACKET */
+/* ═════════════════════════════════════════════════════════════════ */
+
+/* Fighter card slide-in animation */
+.fighter-card {
+  animation: cardSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fighter-card:nth-child(1) { animation-delay: 0.1s; }
+.fighter-card:nth-child(2) { animation-delay: 0.2s; }
+.fighter-card:nth-child(3) { animation-delay: 0.3s; }
+.fighter-card:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes cardSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Winner highlight animation */
+.fighter-card.winner {
+  animation: winnerGlow 1.5s ease-in-out;
+  border-color: #ffea00 !important;
+  box-shadow: 0 0 30px rgba(255, 234, 0, 0.8) !important;
+}
+
+@keyframes winnerGlow {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 30px rgba(255, 234, 0, 0.8);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 50px rgba(255, 234, 0, 1);
+  }
+}
+
+/* Connection lines smooth draw */
+.bracket-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: lineDraw 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes lineDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Round announcements dramatic entrance */
+.round-announcement {
+  animation: roundAnnounce 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes roundAnnounce {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-15deg);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.2) rotate(5deg);
+  }
+  60% {
+    transform: scale(0.95) rotate(-2deg);
+  }
+  80% {
+    transform: scale(1.05) rotate(1deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Victory screen trophy smooth spin */
+.victory-icon {
+  animation: trophySpin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+@keyframes trophySpin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(15deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(0deg) scale(1.2);
+  }
+  75% {
+    transform: rotate(-15deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════════ */
+/* 7. GENERAL POLISH */
+/* ═════════════════════════════════════════════════════════════════ */
+
+/* Universal button hover effects */
+button,
+.btn,
+.action-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+button:hover:not(:disabled),
+.btn:hover:not(:disabled),
+.action-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+}
+
+button:active:not(:disabled),
+.btn:active:not(:disabled),
+.action-btn:active:not(:disabled) {
+  transform: translateY(0);
+  transition-duration: 0.1s;
+}
+
+/* Smooth loading states */
+.loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  animation: loadingShimmer 1.5s infinite;
+}
+
+@keyframes loadingShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Card hover effects */
+.agent-card,
+.fighter-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.agent-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0, 240, 255, 0.3);
+}
+
+.fighter-card:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+
+/* Damage number floating animation */
+.damage-number {
+  animation: damageFloat 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes damageFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(0.5);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-20px) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-80px) scale(0.8);
+  }
+}
+
+.damage-number.critical {
+  animation: damageCritFloat 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes damageCritFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(0.3) rotate(-5deg);
+  }
+  15% {
+    transform: translateY(-30px) scale(1.5) rotate(5deg);
+  }
+  30% {
+    transform: translateY(-40px) scale(1.3) rotate(-2deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-120px) scale(0.8) rotate(0deg);
+  }
+}
+
+/* Mood emoji transitions */
+.mood-emoji {
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+              filter 0.3s ease;
+}
+
+.mood-emoji.changed {
+  animation: moodBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes moodBounce {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  30% {
+    transform: scale(1.3) rotate(15deg);
+  }
+  60% {
+    transform: scale(0.9) rotate(-10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Consistent timing for all transitions */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reduced motion support for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Hardware acceleration for smooth animations */
+.hp-bar,
+.status-icon,
+.damage-number,
+.crit-particle,
+.log-entry,
+.special-btn,
+.fighter-card {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Additional log animation for clearing */
+@keyframes logSlideOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+}

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament Mode - AI Battle Arena</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="tournament.css">
+  <link rel="stylesheet" href="mobile.css">
+</head>
+<body class="tournament-body">
+    <div class="tournament-container">
+        <!-- Header -->
+        <header class="tournament-header">
+            <h1 class="title">
+                <span class="title-icon">🏆</span>
+                TOURNAMENT MODE
+                <span class="title-icon">🏆</span>
+            </h1>
+            <p class="subtitle">8 Fighters Enter. 1 Champion Emerges.</p>
+            <div class="tournament-controls">
+                <button id="startTournament" class="btn-primary">Start New Tournament</button>
+                <button id="randomize" class="btn-secondary">Randomize Fighters</button>
+                <a href="index.html" class="btn-ghost">← Back to Arena</a>
+            </div>
+        </header>
+
+        <!-- Fighter Selection -->
+        <section id="selectionPhase" class="selection-phase">
+            <h2>Select 8 Fighters</h2>
+            <div id="fighterGrid" class="fighter-grid"></div>
+            <div class="selection-counter">
+                <span id="selectedCount">0</span> / 8 Selected
+            </div>
+        </section>
+
+        <!-- Tournament Bracket -->
+        <section id="bracketPhase" class="bracket-phase hidden">
+            <div class="bracket-container">
+                <!-- Quarterfinals -->
+                <div class="bracket-round">
+                    <h3>Quarterfinals</h3>
+                    <div class="matchup" data-match="qf1">
+                        <div class="fighter-slot" data-slot="1"></div>
+                        <span class="vs">VS</span>
+                        <div class="fighter-slot" data-slot="2"></div>
+                        <button class="fight-btn" data-fight="qf1">FIGHT!</button>
+                    </div>
+                    <div class="matchup" data-match="qf2">
+                        <div class="fighter-slot" data-slot="3"></div>
+                        <span class="vs">VS</span>
+                        <div class="fighter-slot" data-slot="4"></div>
+                        <button class="fight-btn" data-fight="qf2">FIGHT!</button>
+                    </div>
+                    <div class="matchup" data-match="qf3">
+                        <div class="fighter-slot" data-slot="5"></div>
+                        <span class="vs">VS</span>
+                        <div class="fighter-slot" data-slot="6"></div>
+                        <button class="fight-btn" data-fight="qf3">FIGHT!</button>
+                    </div>
+                    <div class="matchup" data-match="qf4">
+                        <div class="fighter-slot" data-slot="7"></div>
+                        <span class="vs">VS</span>
+                        <div class="fighter-slot" data-slot="8"></div>
+                        <button class="fight-btn" data-fight="qf4">FIGHT!</button>
+                    </div>
+                </div>
+
+                <!-- Semifinals -->
+                <div class="bracket-round">
+                    <h3>Semifinals</h3>
+                    <div class="matchup" data-match="sf1">
+                        <div class="fighter-slot" data-slot="sf1a"></div>
+                        <span class="vs">VS</span>
+                        <div class="fighter-slot" data-slot="sf1b"></div>
+                        <button class="fight-btn" data-fight="sf1" disabled>FIGHT!</button>
+                    </div>
+                    <div class="matchup" data-match="sf2">
+                        <div class="fighter-slot" data-slot="sf2a"></div>
+                        <span class="vs">VS</span>
+                        <div class="fighter-slot" data-slot="sf2b"></div>
+                        <button class="fight-btn" data-fight="sf2" disabled>FIGHT!</button>
+                    </div>
+                </div>
+
+                <!-- Final -->
+                <div class="bracket-round">
+                    <h3>Grand Final</h3>
+                    <div class="matchup" data-match="final">
+                        <div class="fighter-slot" data-slot="finala"></div>
+                        <span class="vs">VS</span>
+                        <div class="fighter-slot" data-slot="finalb"></div>
+                        <button class="fight-btn" data-fight="final" disabled>FIGHT!</button>
+                    </div>
+                </div>
+
+                <!-- Champion -->
+                <div class="champion-slot">
+                    <h3>Champion</h3>
+                    <div id="championDisplay" class="champion-display">
+                        <span class="trophy-icon">🏆</span>
+                        <div class="champion-name">???</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Battle Modal -->
+        <div id="battleModal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Battle in Progress...</h2>
+                <div class="battle-preview">
+                    <div class="fighter-preview" id="fighter1Preview"></div>
+                    <div class="vs-large">VS</div>
+                    <div class="fighter-preview" id="fighter2Preview"></div>
+                </div>
+                <div class="battle-narration" id="battleNarration"></div>
+                <button id="closeBattle" class="btn-primary">View Result</button>
+            </div>
+        </div>
+
+        <!-- Victory Modal -->
+        <div id="victoryModal" class="modal hidden">
+            <div class="modal-content victory-content">
+                <div class="trophy-animation">🏆</div>
+                <h1 class="victory-title">CHAMPION!</h1>
+                <div class="champion-info" id="championInfo"></div>
+                <div class="champion-stats" id="championStats"></div>
+                <button id="newTournament" class="btn-primary">New Tournament</button>
+                <a href="index.html" class="btn-secondary">Back to Arena</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="tournament.js"></script>
+<script src="navigation.js"></script>
+</body>
+</html>
