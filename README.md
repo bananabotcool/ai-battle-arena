@@ -195,20 +195,26 @@ Winners automatically advance to next round. Bracket updates in real-time.
 ## 📸 Screenshots
 
 ### Main Battle Arena
-![Main Arena](screenshots/01-main-arena.png)
+![Main Arena](screenshots/01-hero-screen.png)
 *Epic 1v1 battles with live HP bars and God AI commentary*
 
+### Battle Action & Effects
+![Battle Active](screenshots/03-battle-active.png)
+*Real-time combat with HP updates, status effects, and battle log*
+
 ### Tournament Bracket
-![Tournament](screenshots/02-tournament-bracket.png)
-*8-fighter single-elimination tournaments with visual bracket*
+![Tournament](screenshots/07-tournament-bracket.png)
+*8-fighter single-elimination tournaments with visual bracket tree*
 
-### Custom Creator
-![Creator](screenshots/03-custom-creator.png)
-*Design your own fighters with stat sliders and ability selection*
+### Custom Fighter Creator
+![Creator](screenshots/10-custom-creator.png)
+*Design your own fighters with stat allocation and ability selection*
 
-### Victory Screen
-![Victory](screenshots/04-victory-screen.png)
-*Championship celebrations with trophy animations*
+### Victory Celebration
+![Victory](screenshots/09-victory-screen.png)
+*Championship screen with winner stats and trophy animation*
+
+**[View all 12 screenshots →](screenshots/README.md)**
 
 ---
 
