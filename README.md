@@ -1,436 +1,350 @@
-# 🎮 AI BATTLE ARENA
+# 🎮 AI Battle Arena
 
-> **Epic RPG-style AI agent combat simulator with dramatic God AI narration**
+<p align="center">
+  <img src="screenshots/hero-banner.png" alt="AI Battle Arena" width="800"/>
+</p>
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/yourusername/ai-battle-arena)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
+<p align="center">
+  <img src="https://img.shields.io/badge/status-active-success.svg" />
+  <img src="https://img.shields.io/badge/node-%3E%3D18.0.0-blue.svg" />
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg" />
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" />
+</p>
+
+**An epic, visually stunning AI combat simulator with God AI narration, tournament mode, and custom fighter creation.**
 
 ---
 
-## 🌟 Features
+## ✨ Features
 
-### Core Gameplay
-- ⚔️ **Turn-Based Combat** - Strategic RPG-style battles
-- 🎭 **God AI Narrator** - Dramatic narration powered by Chutes API
-- 🤖 **8+ Unique Agents** - Each with distinct personalities and abilities
-- 💥 **Status Effects** - Burn, Freeze, Poison, Stun, Confusion, Bleed
-- ⚡ **Critical Hits** - 2x damage with dramatic screen effects
-- ✨ **Special Abilities** - Ultimate moves with 3-turn cooldowns
+### 🎭 Core Battle System
+- **God AI Narrator** - Dramatic battle commentary powered by OpenClaw/Chutes API
+- **6 Status Effects** - Burn, Freeze, Poison, Stun, Confusion, Bleed
+- **Critical Hit System** - 20% crit chance with screen shake & particle effects
+- **Special Moves** - Unique ultimates with 3-turn cooldowns
+- **Auto-Battle Mode** - AI vs AI spectator mode
 
-### Game Modes
-- 🏟️ **Standard Battle** - Classic 1v1 combat
-- 🏆 **Tournament Mode** - 8-fighter elimination bracket
-- 🤖 **AI vs AI** - Autonomous endless battles with statistics
-- 💀 **Survival Mode** - Fight waves of enemies
-- 📹 **Replay System** - Record, playback, and share battles
+### 🏆 Tournament Mode
+- **8-Fighter Brackets** - Single-elimination tournaments
+- **Visual Bracket Tree** - See the path to victory
+- **Auto-Progression** - Winners advance automatically
+- **Championship Screen** - Trophy animation & victory stats
+- **State Persistence** - Resume tournaments on page reload
 
-### Progression
-- 📊 **Leaderboard** - ELO-based rankings with detailed stats
-- 🏅 **Achievements** - 15 unlockable milestones
-- 📈 **Statistics** - Track wins, damage, streaks, and more
-- 🎨 **Custom Fighters** - Create your own agents with unique builds
+### ⚔️ Custom Fighter Creator
+- **100-Point Stat System** - HP, ATK, DEF, SPD, LUCK, SPECIAL
+- **7 Personality Types** - Berserker, Tank, Trickster, Strategist, Glass Cannon, Speedster, Balanced
+- **16 Ability Pool** - Choose 4 abilities (must include 1 Special)
+- **Live Preview** - See your fighter card update in real-time
+- **Permanent Storage** - Custom fighters saved to JSON
+
+### 🎨 Visual Design
+- **Cyberpunk Aesthetic** - Dark theme with neon accents (cyan, pink, purple, yellow)
+- **Smooth Animations** - 60fps battles with CSS transitions
+- **HP Bar Colors** - Green → Yellow → Orange → Red based on health
+- **Floating Damage Numbers** - Rise and fade effects
+- **Screen Effects** - Shake, flash, glow on impact
+- **Responsive Design** - Works on desktop, tablet, mobile
 
 ---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+
+- Node.js >= 18.0.0
 - npm or yarn
-- OpenClaw Gateway (for God AI)
+- OpenClaw Gateway Token (for God AI narrator)
 
 ### Installation
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/ai-battle-arena.git
+git clone https://github.com/bananabotcool/ai-battle-arena.git
 cd ai-battle-arena
 
 # Install dependencies
 npm install
 
-# Configure environment
+# Set up environment
 cp .env.example .env
-# Edit .env with your OpenClaw gateway token
+# Edit .env and add your OPENCLAW_GATEWAY_TOKEN
+```
 
-# Start server
+### Running the Arena
+
+```bash
+# Start server (port 3000)
 npm start
 
 # Open browser
-open http://localhost:3001
+http://localhost:3000
 ```
 
-### Docker (Recommended)
+### Quick Battle
 
-```bash
-# Start with Docker Compose
-docker-compose up -d
+1. Open `index.html` - Main battle arena
+2. Click action buttons to attack/defend/special
+3. Watch God AI narrate the battle
+4. Victory screen appears when one fighter reaches 0 HP
 
-# View logs
-docker-compose logs -f
+### Tournament Mode
 
-# Stop
-docker-compose down
+1. Click "🏆 TOURNAMENT MODE" button
+2. 8 random fighters selected automatically
+3. Click "Start Match" on each bracket fight
+4. Winners advance through Quarterfinals → Semifinals → Finals
+5. Championship screen shows ultimate victor
+
+### Custom Fighter Creator
+
+1. Open `demo.html` or click "Create Custom Fighter"
+2. Enter name & select personality type
+3. Allocate 100 stat points using sliders
+4. Pick 4 abilities from pool
+5. Click "Create Fighter"
+6. Battle your custom creation!
+
+---
+
+## 📁 Project Structure
+
 ```
+ai-battle-arena/
+├── public/                    # Frontend assets
+│   ├── index.html            # Main battle arena
+│   ├── tournament.html       # Tournament mode
+│   ├── demo.html             # Full demo with creator
+│   ├── agents.js             # Agent loading & selection
+│   ├── arena.js              # Battle controller
+│   ├── animator.js           # Visual effects engine
+│   ├── creator.js            # Custom fighter creator
+│   ├── tournament.js         # Tournament system
+│   ├── styles.css            # Main styles
+│   └── tournament.css        # Tournament styles
+├── server/                    # Backend (optional)
+│   ├── server.js             # Express server
+│   ├── battle-engine.js      # Combat logic
+│   └── god-narrator.js       # AI narrator integration
+├── data/
+│   ├── default-agents.json   # 8 pre-made fighters
+│   └── custom-agents.json    # User-created fighters
+├── docs/                      # Documentation
+│   ├── API.md                # API reference
+│   ├── ARCHITECTURE.md       # System design
+│   └── CONTRIBUTING.md       # Contribution guide
+├── tests/                     # Test suite
+│   └── battle.test.js
+├── screenshots/               # Demo images
+├── CREATOR-README.md         # Custom creator guide
+├── TOURNAMENT-README.md      # Tournament guide
+├── README.md                 # This file
+├── LICENSE                   # MIT license
+├── package.json              # Dependencies
+└── .gitignore
+```
+
+---
+
+## 🎯 How It Works
+
+### Battle Engine
+
+The battle system uses a turn-based combat model:
+
+1. **Damage Calculation:**
+   ```javascript
+   baseDamage = attacker.ATK
+   multiplier = random(0.8 - 1.2) or 2.0 (20% crit)
+   defenseReduction = defender.DEF * 0.2 (or 0.5 if defending)
+   finalDamage = max(5, baseDamage * multiplier - defense)
+   ```
+
+2. **Special Attacks:**
+   - 2x damage multiplier
+   - 3-turn cooldown after use
+   - Dramatic screen effects
+
+3. **Status Effects:**
+   - Burn: 5 damage/turn for 3 turns
+   - Freeze: Skip next turn
+   - Poison: 3 damage/turn for 5 turns
+   - Stun: Skip next turn + defense halved
+   - Confusion: 50% chance to hit self
+   - Bleed: 7 damage/turn for 2 turns
+
+### Tournament System
+
+```javascript
+// 8 fighters → 7 matches
+Quarterfinals: 4 matches (8 → 4 fighters)
+Semifinals:    2 matches (4 → 2 fighters)
+Finals:        1 match   (2 → 1 champion)
+```
+
+Winners automatically advance to next round. Bracket updates in real-time.
+
+### Custom Fighter Creation
+
+- **Stat Points:** 100 total, allocate across 6 stats
+- **Abilities:** 16 in pool, select 4 (1 must be Special)
+- **Validation:** Client-side checks before save
+- **Storage:** JSON file + localStorage fallback
 
 ---
 
 ## 📸 Screenshots
 
-### Standard Battle
-![Battle Screenshot](docs/screenshots/battle.png)
-*Epic 1v1 combat with God AI narration*
+### Main Battle Arena
+![Main Arena](screenshots/01-main-arena.png)
+*Epic 1v1 battles with live HP bars and God AI commentary*
 
-### Tournament Mode
-![Tournament Screenshot](docs/screenshots/tournament.png)
-*8-fighter elimination bracket*
+### Tournament Bracket
+![Tournament](screenshots/02-tournament-bracket.png)
+*8-fighter single-elimination tournaments with visual bracket*
 
-### AI vs AI
-![AI vs AI Screenshot](docs/screenshots/ai-vs-ai.png)
-*Autonomous battles with live statistics*
+### Custom Creator
+![Creator](screenshots/03-custom-creator.png)
+*Design your own fighters with stat sliders and ability selection*
 
-### Custom Fighter Creator
-![Creator Screenshot](docs/screenshots/creator.png)
-*Build your own fighters with 100 stat points*
-
-### Leaderboard
-![Leaderboard Screenshot](docs/screenshots/leaderboard.png)
-*ELO rankings with detailed statistics*
-
-### Achievements
-![Achievements Screenshot](docs/screenshots/achievements.png)
-*15 unlockable milestones*
-
----
-
-## 🎯 Game Modes
-
-### Standard Battle
-Classic 1v1 combat with:
-- Agent selection
-- Turn-based combat
-- God AI narration
-- Status effects
-- Critical hits
-- Special abilities
-
-### Tournament Mode
-8-fighter single-elimination bracket:
-- Quarterfinals (4 matches)
-- Semifinals (2 matches)
-- Finals (1 match)
-- Visual bracket tree
-- Trophy ceremony
-
-### AI vs AI
-Watch autonomous battles:
-- Continuous battle queue
-- Speed control (1x-10x)
-- Live statistics tracking
-- Battle history
-- Pause/Resume
-
-### Survival Mode
-Fight waves of enemies:
-- Increasing difficulty
-- Health persistence
-- Power-ups
-- High score tracking
-
----
-
-## 🤖 Default Agents
-
-| Agent | HP | ATK | DEF | Personality |
-|-------|----|----|-----|-------------|
-| **Bash Quickfingers** | 120 | 85 | 60 | Lightning-fast backend warrior |
-| **Ruby Loopster** | 110 | 80 | 65 | Elegant route master |
-| **Sergeant Semicolon** | 100 | 70 | 80 | Strategic commander |
-| **PixelPusher Prime** | 95 | 75 | 70 | Visual virtuoso |
-| **ThinkTanker** | 90 | 90 | 55 | Strategic mastermind |
-| **CEO** | 150 | 95 | 85 | Executive powerhouse |
-
----
-
-## 🎨 Creating Custom Fighters
-
-1. Navigate to **Custom Fighter** page
-2. Enter fighter name
-3. Choose personality archetype:
-   - Berserker - High damage, low defense
-   - Tank - High HP and defense
-   - Trickster - Unpredictable abilities
-   - Strategist - Balanced, tactical
-   - Glass Cannon - Max damage, minimum HP
-   - Speedster - Fast attacks
-   - Balanced - Well-rounded
-
-4. Allocate **100 stat points** across:
-   - HP - Health points
-   - ATK - Attack power
-   - DEF - Defense
-   - SPEED - Turn speed
-   - LUCK - Critical hit chance
-   - SPECIAL - Ultimate ability power
-
-5. Select **4 abilities** (must include 1 Special)
-6. Save and battle!
-
----
-
-## 🏆 Achievements
-
-### Milestone Achievements
-- 🗡️ **First Blood** - Win your first battle
-- ⚔️ **Warrior** - Win 10 battles
-- 🏆 **Champion** - Win 50 battles
-- 👑 **Legend** - Win 100 battles
-
-### Skill Achievements
-- 💎 **Perfectionist** - Win without taking damage
-- 💥 **Glass Cannon** - Deal 200+ damage in one battle
-- 🩹 **Survivor** - Win with less than 10 HP
-- 🔥 **Streak Master** - Win 5 battles in a row
-
-### Special Achievements
-- 🥇 **Tournament Victor** - Win a tournament
-- ⚡ **Critical Master** - Land 20 critical hits
-- 🧪 **Status Master** - Apply 50 status effects
-- 🎖️ **Battle Veteran** - Complete 100 battles
-- 🎨 **Custom Creator** - Create a custom fighter
-- 💨 **Speedster** - Win in under 5 rounds
-- 🛡️ **Endurance** - Survive 20+ round battle
-
----
-
-## 📊 API Reference
-
-### Base URL
-```
-http://localhost:3001/api
-```
-
-### Endpoints
-
-#### GET /api/agents
-List all agents.
-
-#### POST /api/battle/start
-Start a new battle.
-```json
-{
-  "agent1Id": "bash-quickfingers",
-  "agent2Id": "ceo"
-}
-```
-
-#### POST /api/battle/action
-Execute a battle turn.
-```json
-{
-  "battleId": "battle-123",
-  "abilityIndex": 0
-}
-```
-
-#### GET /api/leaderboard
-Get rankings.
-- Query: `sortBy=rating|winRate|wins|battles`
-- Query: `limit=10`
-
-#### GET /api/leaderboard/:agentId
-Get specific agent stats.
-
-#### POST /api/leaderboard/record
-Record battle result.
-
----
-
-## 🎭 God AI Integration
-
-The God AI uses the **Chutes Kimi K2.5 TEE model** via OpenClaw's `sessions_spawn` API to generate dramatic battle narration.
-
-### Configuration
-```env
-OPENCLAW_GATEWAY_URL=http://localhost:18789
-OPENCLAW_GATEWAY_TOKEN=your_token_here
-```
-
-### Features
-- Dramatic 1-3 sentence narration for every action
-- Context-aware commentary based on battle state
-- Personality-specific narration styles
-- Automatic fallback if AI unavailable
+### Victory Screen
+![Victory](screenshots/04-victory-screen.png)
+*Championship celebrations with trophy animations*
 
 ---
 
 ## 🛠️ Tech Stack
 
-**Frontend:**
-- HTML5, CSS3, Vanilla JavaScript
-- Responsive design
-- No frameworks required
+### Frontend
+- **HTML5** - Semantic structure
+- **CSS3** - Advanced animations, gradients, flexbox
+- **Vanilla JavaScript** - No frameworks, pure DOM manipulation
+- **Google Fonts** - Orbitron (titles) + Rajdhani (body)
 
-**Backend:**
-- Node.js 18+
-- Express.js
-- JSON file storage
+### Backend (Optional)
+- **Node.js** - Server runtime
+- **Express** - HTTP server & API
+- **better-sqlite3** - Data persistence
+- **Multer** - File uploads
+- **OpenClaw** - God AI narrator integration
 
-**AI:**
-- Chutes API (Kimi K2.5 TEE)
-- OpenClaw Gateway integration
-
----
-
-## 📦 Project Structure
-
-```
-ai-battle-arena/
-├── public/              # Frontend files
-│   ├── index.html       # Main battle page
-│   ├── tournament.html  # Tournament mode
-│   ├── ai-vs-ai.html    # Autonomous battles
-│   ├── leaderboard.html # Rankings
-│   ├── achievements.html # Progress tracking
-│   ├── styles.css       # Global styles
-│   ├── *.js             # Frontend logic
-│   └── navigation.js    # Global nav menu
-├── server/              # Backend files
-│   ├── server.js        # Express server
-│   ├── battle-engine.js # Combat mechanics
-│   ├── god-narrator.js  # AI narration
-│   └── leaderboard.js   # Rankings system
-├── data/                # Persistent storage
-│   ├── custom-agents.json
-│   └── leaderboard.json
-├── docs/                # Documentation
-│   ├── DOCUMENTATION.md
-│   └── DEPLOYMENT.md
-├── Dockerfile           # Docker build
-├── docker-compose.yml   # Docker Compose
-└── package.json         # Dependencies
-```
-
----
-
-## 🚀 Deployment
-
-### Docker (Recommended)
-
-```bash
-docker-compose up -d
-```
-
-### Manual
-
-```bash
-npm install
-NODE_ENV=production PORT=3001 node server/server.js
-```
-
-### systemd Service
-
-See [DEPLOYMENT.md](DEPLOYMENT.md) for full guide.
-
----
-
-## 📖 Documentation
-
-- **[Full Documentation](DOCUMENTATION.md)** - Complete user guide
-- **[Deployment Guide](DEPLOYMENT.md)** - Production deployment
-- **[API Reference](DOCUMENTATION.md#api-reference)** - REST API docs
+### Libraries
+- None! Pure vanilla stack for maximum performance
 
 ---
 
 ## 🧪 Testing
 
+### Run Tests
 ```bash
-# Run tests
 npm test
-
-# Load testing
-ab -n 1000 -c 10 http://localhost:3001/api/agents
-
-# Health check
-curl http://localhost:3001/health
 ```
+
+### Manual Testing Checklist
+
+**Battle System:**
+- [ ] Attack deals damage correctly
+- [ ] Defend reduces incoming damage
+- [ ] Special moves trigger cooldown
+- [ ] HP bars update smoothly
+- [ ] Victory screen appears at 0 HP
+
+**Tournament:**
+- [ ] 8 fighters load correctly
+- [ ] Matches queue in order (QF1→QF2→QF3→QF4→SF1→SF2→F)
+- [ ] Winners advance to correct bracket slots
+- [ ] Championship screen shows winner
+
+**Custom Creator:**
+- [ ] Stat sliders respect 100-point limit
+- [ ] Ability selection enforces 4-ability limit
+- [ ] Must select 1 Special ability
+- [ ] Preview updates in real-time
+- [ ] Saved fighters persist across sessions
+
+---
+
+## 📚 Documentation
+
+- **[API Reference](docs/API.md)** - Complete endpoint documentation
+- **[Architecture Guide](docs/ARCHITECTURE.md)** - System design deep-dive
+- **[Contributing Guide](docs/CONTRIBUTING.md)** - How to contribute
+- **[Custom Creator Guide](CREATOR-README.md)** - Fighter creation tutorial
+- **[Tournament Guide](TOURNAMENT-README.md)** - Tournament mode reference
 
 ---
 
 ## 🤝 Contributing
 
-Contributions welcome! Please follow these steps:
+We welcome contributions! Please see [CONTRIBUTING.md](docs/CONTRIBUTING.md) for:
+- Code style guidelines
+- Pull request process
+- Issue reporting
+- Feature requests
+
+### Quick Contribution Steps
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
 ---
 
-## 📝 License
+## 🎨 Design Philosophy
+
+**Epic Fighting Game Aesthetic** inspired by:
+- Street Fighter (health bars, dramatic effects)
+- RPGs (stats, abilities, progression)
+- Cyberpunk (neon colors, dark backgrounds)
+- Modern UI (smooth 60fps animations, clean spacing)
+
+**Key Principles:**
+- **Dramatic** - Every action feels impactful
+- **Clear** - Stats and actions are immediately readable
+- **Polished** - Smooth animations throughout
+- **Accessible** - Works on all devices
+
+---
+
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+```
+MIT License
+
+Copyright (c) 2026 BananaBot Studios
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+[Full MIT license text]
+```
 
 ---
 
 ## 🙏 Acknowledgments
 
-- **OpenClaw** - Agent orchestration platform
-- **Chutes API** - AI narration (Kimi K2.5 TEE model)
-- **BananaBot Studios** - Development team
+- **OpenClaw Team** - For the God AI narrator integration
+- **BananaBot Studios** - Original creators
+- **Contributors** - Everyone who submits PRs and issues
 
 ---
 
-## 📞 Support
+## 📞 Contact & Support
 
-- **Issues:** [GitHub Issues](https://github.com/yourusername/ai-battle-arena/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/yourusername/ai-battle-arena/discussions)
-- **Discord:** [Join our server](https://discord.gg/your-invite)
-
----
-
-## 📊 Stats
-
-- **Lines of Code:** 50,000+
-- **Files:** 333+
-- **Features:** 15+ game modes and systems
-- **Agents:** 8 default + unlimited custom
-- **Achievements:** 15 unlockable
+- **Issues:** [GitHub Issues](https://github.com/bananabotcool/ai-battle-arena/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/bananabotcool/ai-battle-arena/discussions)
+- **Twitter:** [@bananabotcool](https://twitter.com/bananabotcool)
 
 ---
 
-## 🎯 Roadmap
-
-### v2.1 (Next)
-- [ ] Sound effects
-- [ ] Mobile responsive design
-- [ ] Multiplayer mode
-- [ ] Team battles (2v2, 3v3)
-- [ ] More status effects
-
-### v3.0 (Future)
-- [ ] 3D graphics
-- [ ] Real-time online battles
-- [ ] Clan system
-- [ ] Ranked seasons
-- [ ] Spectator mode
-
----
-
-## ⭐ Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/ai-battle-arena&type=Date)](https://star-history.com/#yourusername/ai-battle-arena&Date)
-
----
-
-<div align="center">
-
-**Made with ❤️ by BananaBot Studios**
-
-[Website](https://bananabot.studio) • [Twitter](https://twitter.com/bananabot) • [Discord](https://discord.gg/bananabot)
-
-</div>
+<p align="center">
+  <strong>Built with ❤️ by BananaBot Studios</strong><br>
+  ⚔️ May the best fighter win! 🏆
+</p>
